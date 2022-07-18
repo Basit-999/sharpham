@@ -1,0 +1,272 @@
+{% assign product = all_products['sharpham-pinot-noir'] %}
+<style>
+    .sp-quantity {
+        width: 124px;
+        height: 42px;
+        font-family: "ProximaNova Bold", Helvetica, Arial;
+    }
+
+    .sp-minus {
+        width: 40px;
+        height: 40px;
+        border: 1px solid #e1e1e1;
+        float: left;
+        text-align: center;
+    }
+
+    .sp-input {
+        width: 40px;
+        height: 40px;
+        border: 1px solid #e1e1e1;
+        border-left: 0px solid black;
+        float: left;
+    }
+
+    .sp-plus {
+        width: 40px;
+        height: 40px;
+        border: 1px solid #e1e1e1;
+        border-left: 0px solid #e1e1e1;
+        float: left;
+        text-align: center;
+    }
+
+    .sp-input input {
+        width: 30px;
+        height: 34px;
+        text-align: center;
+        font-family: "ProximaNova Bold", Helvetica, Arial;
+        border: none;
+    }
+
+    .sp-input input:focus {
+        border: 1px solid #e1e1e1;
+        border: none;
+    }
+
+    .sp-minus a, .sp-plus a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        padding-top: 5px;
+    }
+
+    input.quntity-input {
+        display: block !important;
+    }
+</style>
+<div class="modal fade" id="bottle-pop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img class="d-block w-100" src="{{ 'bottle-inner-img.png' | asset_url }}" alt="">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="wine-area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <div class="img-box-bottle">
+                    <a class="box-search" href="" data-toggle="modal" data-target="#bottle-pop"> <img
+                                src="{{ 'long-search.svg' | asset_url }}" class="search-iconz"></a>
+                    <img class="d-block w-100" src="{{ 'bottle-inner-img.png' | asset_url }}" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="bottle-desc">
+                    <h3>Sharpham Pinot Noir</h3>
+                    <p>A ripe and youthful cool climate Pinot Noir showing wild strawberry, cherry with subtle spice.
+                        Full flavoured with juicy red berries and broad tannins. Drinking well now but will improve with
+                        time.</p>
+
+                    <form class="form cf" action="/cart/add" method="post">
+                        <section class="plan cf">
+                            {% if product.variants.size > 1 %}
+                                {% if product.options[0] %}
+                                    {% assign used = '' %}
+                                    <ul class="radio-line clearfix">
+                                        {% for variant in product.variants %}
+                                            {% unless used contains variant.option1 %}
+                                                <li>
+                                                    <input class="select-one" onchange="letsDoThis()" type="radio"
+                                                           name="radio1"
+                                                           id="{{ variant.option1 }}"
+                                                           value="{{ variant.option1 }}"
+                                                            {% if forloop.first == true %} checked="checked"{% endif %}>
+                                                    <label class="basic-label four col " for="{{ variant.option1 }}">
+                                                        {{ variant.option1 }}
+                                                    </label>
+                                                </li>
+                                                {% capture used %}
+                                                    {{ used }}
+                                                    {{ variant.option1 }}
+                                                {% endcapture %}
+                                            {% endunless %}
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                                {% if product.options[1] %}
+                                    <h5>Extras</h5>
+                                    <ul class="radio-line two clearfix">
+                                    {% assign used = '' %}
+                                        {% for variant in product.variants %}
+                                            {% unless used contains variant.option2 %}
+                                                <li>
+                                                    <input class="select-two" onchange="letsDoThis()" type="radio"
+                                                           name="radio2"
+                                                           id="{{ variant.option2 }}" value="{{ variant.option2 }}"
+                                                            {% if forloop.first == true %} checked="checked"{% endif %}>
+                                                    <label class="free-label four col" for="{{ variant.option2 }}">
+                                                        {{ variant.option2 }}
+                                                    </label>
+                                                </li>
+                                                {% capture used %}
+                                                    {{ used }}
+                                                    {{ variant.option2 }}
+                                                {% endcapture %}
+                                            {% endunless %}
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            {% endif %}
+                            <div class="sp-quantity_button">
+                                <input type="hidden" name="id" id="product-select"
+                                       value="{{ product.variants.first.id }}"/>
+                                <button type="submit" class="big-btn"><span id="price" data-price="{{ product.variants[0].price | money_without_currency }}">{{ product.variants[0].price | money }}</span> - Add to Basket</button>
+                                <div class="sp-quantity">
+                                    <div class="sp-plus minus_plus_master">
+                                        <i class="fal fa-angle-up"></i>
+                                    </div>
+                                    <div class="sp-input">
+                                        <input type="number" class="quntity-input" name="quantity" value="1"/>
+                                    </div>
+                                    <div class="sp-minus minus_plus_master">
+                                        <i class="fal fa-angle-down"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <p>Free Delivery on all orders over £150</p>
+                        </section>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="wide-img">
+    <img src="{{ 'img-area.jpg' | asset_url }}" class="w-100">
+</section>
+
+<section class="detail-list">
+    <div class="container-fluid">
+        <ul class="five-row">
+            <li>
+                <span>Style</span>
+                <h6>Light / Fruity / Spiced Red</h6>
+            </li>
+            <li>
+                <span>Grape Variety</span>
+                <h6>Pinot Noir</h6>
+            </li>
+            <li>
+                <span>Vintage</span>
+                <h6>2020</h6>
+            </li>
+            <li>
+                <span>Ageing</span>
+                <h6>8 months in French oak barrels</h6>
+            </li>
+            <li>
+                <span>ABV</span>
+                <h6>12%</h6>
+            </li>
+
+        </ul>
+    </div>
+</section>
+
+<section class="wide-img mrg-bt">
+    <div class="container-fluid">
+        <div class="img-a">
+            <img src="{{ 'wine-making.jpg' | asset_url }}" class="w-100">
+            <div class="wht-bx">
+                <h3>Wine Making</h3>
+                <p>Our cleanest Pinot Noir fruit is part crushed and cold macerated for at least a week prior to the
+                    fermentation with the inclusion of some whole bunch and stems. There is a post fermentation
+                    maceration period of at least a week before a partial malolactic fermentation. This wine then spent
+                    6 months in second fill French oak barrels prior to bottling.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="two-sec mrg-bt">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="img-a scnd-bx">
+                    <img src="{{ 'food-p.jpg' | asset_url }}" class="w-100">
+                    <div class="wht-bx">
+                        <h3>Food Pairing</h3>
+                        <p>A good pairing with game meat, mushroom dishes or casserole.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="img-a lst-bx">
+                    <img src="{{ 'acc.jpg' | asset_url }}" class="w-100">
+                    <div class="wht-bx">
+                        <h3>Accolades</h3>
+
+                        <ul class="list-dot">
+                            <li>
+                                Trophy Medal Winner 'Best Red Wine'
+                            </li>
+                            <li>English And Welsh Wine Of The Year Competition 2015</li>
+                            <li>Wine GB Gold Medal Winner 2019</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    function letsDoThis() {
+        {% if product.options[0] %}
+        var opt1 = $(".select-one:checked").val();{% endif %}{% if product.options[1] %}
+        var opt2 = $(".select-two:checked").val();{% endif %}{% if product.options[2] %}
+        var opt3 = document.getElementById("select-three").value;
+                {% endif %}var id = "";{% for v in product.variants %}
+        if (
+            opt1 == "{{ v.option1 }}"{% if product.options[1] %} && opt2 == "{{ v.option2 }}"{% endif %}{% if product.options[2] %} && opt3 == "{{ v.option3 }}"{% endif %}
+        ) {
+            var id = {{ v.id }};
+            var quantityVal = parseInt($(".quntity-input").val());
+            var price = "{{ v.price | money_without_currency  }}";
+            price = price * quantityVal;
+
+        }
+        {% endfor %}
+        if (id != "") {
+            document.getElementById("product-select").value = id;
+            $("#price").attr("data-price", price);
+            $("#price").text(currentCurrent+' '+price);
+        }
+    }
+</script>

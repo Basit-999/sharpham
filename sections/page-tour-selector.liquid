@@ -1,0 +1,87 @@
+{%section 'select-a-tour-banner' %}
+{%section 'select-a-tour-img-with-txt' %}
+
+<section class="main-banner d-none">
+  <div class="container-fluid">
+    <img src="{{ 'main-banner.jpg' | file_url }}" alt="" />
+  </div>
+</section>
+<section class="two-bx d-none">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-6 col-md-12">
+        <div class="max-w">
+          <h1>British Wine and Cheese Tours <br>at The Sharpham Estate, Devon.</h1>
+          <h4>Join us for our up and coming new 2022 tours. Wine tours and Cheese Tastings are at the heart of Sharpham Wine, and here at Sandridge Barton we intend to make the tours even better than ever.</h4>
+          <p>Sharpham Wine has settled into it’s new home at Sandridge Barton. The quality of wine tours and cheese tastings is still very much at the forefront of everything we do here at Sandridge Estate, and will continue to be so. From restructured staff to brand new equipment, we’ll soon be ready to open our doors and welcome you all to this wonderful part of the world.</p>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="g-box">
+              <img src="{{ 'g1.jpg' | file_url }}" alt="" class="w-100" />
+              <div class="green-bx">
+                <h3>Guided Tasting</h3>
+                <a class="primary-white" href="">Book Now</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="g-box">
+              <img src="{{ 'g2.jpg' | file_url }}" alt="" class="w-100" />
+              <div class="green-bx">
+                <h3>Vine to Wine</h3>
+                <a class="primary-white" href="">Book Now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="tours">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-3 col-md-12">
+        <div class="tour-bx">
+          <a href=""><img src="{{ 't1.jpg' | file_url }}" alt="" class="w-100" />
+            <h4>Book or Redeem Tour <img src="{{ 'long-arrow.svg' | asset_url }}" alt="" class="arrow-lg" /></h4></a>
+        </div>
+        <div class="tour-bx">
+          <a href=""><img src="{{ 't2.jpg' | file_url }}" alt="" class="w-100" />
+            <h4>Book or Redeem Tour <img src="{{ 'long-arrow.svg' | asset_url }}" alt="" class="arrow-lg" /></h4></a>
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-12">
+        <div class="tour-three">
+          <img src="{{ 't3.jpg' | file_url }}" alt="" class="w-100" />
+          <div class="cp-area">
+            <h5>Self-Guided Flights & Walks</h5>
+            <p>Fancy some DIY tasting or just rather a more leisurely stroll around the beautiful grounds? Look no further...</p>
+            <a href="" class="primary-btn">Self-Guided Tasting flight</a>
+            <a href="" class="primary-btn-two">Vineyward Walk</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tour-four">
+      <img src="{{ 'tour-four.jpg' | file_url }}" alt="" class="w-100" />
+      <div class="cp-area new-a">
+        <h5>Tours & Weather</h5>
+        <p>All our tours are weather dependent, so please give us a call in advance if you are unsure.</p>
+        <h5>We Love Dogs</h5>
+        <p>We love well-behaved dogs, and welcome them to join us on the tours. We just ask that you ensure you clean up after them, and that they are comfortable around groups of people.</p>
+        <a href="" class="primary-btn">View Our Full Terms & Conditions</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Page Tour Selector",
+    "settings": []
+  }
+{% endschema %}

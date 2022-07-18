@@ -1,0 +1,62 @@
+<section class="award-cheese text-center">
+   <div class="container-fluid">
+      <h4>{{section.settings.heading}}</h4>
+      <img src="{{section.settings.img | img_url:'master'}}" alt="" class="mx-auto d-block" />
+      <ul class="two-btns clearfix">
+         <li><a href="{{section.settings.link1}}" class="shop-now">{{section.settings.btn_label1}}</a></li>
+         <li><a href="{{section.settings.link2}}" class="view-now">{{section.settings.btn_label2}}</a></li>
+      </ul>
+   </div>
+</section>
+{% schema %}
+  {
+    "name": "Award Winning cheese sec",
+    "settings": [
+        {
+        "id":"heading",
+        "type":"textarea",
+        "label":"Heading",
+        "default":"Our Award Winning Wines & Cheeses"
+        },
+        {
+        "id":"btn_label1",
+        "type":"text",
+        "label":"Button Label 1",
+        "default":"Shop Now"
+        },
+        {
+        "id":"link1",
+        "type":"url",
+        "label":"Button Link 1"
+        },
+        {
+        "id":"btn_label2",
+        "type":"text",
+        "label":"Button Label 2",
+        "default":"View Our Awards"
+        },
+        {
+        "id":"link2",
+        "type":"url",
+        "label":"Button Link 2"
+        },
+        {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Background Image",
+        "info": "1135x800px recommended"
+        }
+	],
+    "presets": [{
+      "name": "Award Winning cheese Section",
+      "category": "HOMEPAGE"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
