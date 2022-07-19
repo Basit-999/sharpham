@@ -467,23 +467,8 @@
         </div>
     </div>
     <div class="booking-bg smlk">
-      {% assign customer = order.customer %}
-    
-      {% assign email = customer.email %}
-      {% assign id = customer.id %}
-  
-      {%- capture person -%}
-        id: {{ id }}, email: {{ email }}
-      {%- endcapture -%}
-
-      {% assign person = person | split:',' %}
-
-       <script>
-        console.log('A Person', {{ person | json }} );
-      </script>
-  
         <h2 class="sandhead">Can’t make it, but not ready to rebook yet?</h2>
-        <button class="red-btn order_delete " data-id="{{ person }}">Cancel Tour Booking</button>
+        <button class="red-btn order_delete " data-id="{{ order.id }}">Cancel Tour Booking</button>
     </div>
 </div>
     {% assign product = all_products[line_item.product.handle] %}

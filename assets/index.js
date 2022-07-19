@@ -448,15 +448,12 @@ $("body").on("click", ".update_tour", function (e) {
 });
 
 $("body").on('click',".order_delete", function(){
-    var data = $(this).attr("data-id");
-
-  console.log('data: ', JSON.parse(JSON.stringify(data)));
+    var order_id = $(this).attr("data-id");
   
     jQuery.ajax({
         type: 'POST',
-        url: "https://045f-2400-adc5-12a-8300-5010-6165-63df-c41e.ngrok.io/apps/hello-world",
+        url: `https://mexenius-store.myshopify.com/apps/proxy/test-route?order_id=${order_id}`,
         dataType: 'json',
-        data: {data},
         success: function (data) {
             window.location.href= "/account";
         }
