@@ -452,7 +452,7 @@ $("body").on('click',".order_delete", function(){
   
     jQuery.ajax({
         type: 'POST',
-        url: `https://mexenius-store.myshopify.com/apps/proxy/test-route?order_id=${order_id}`,
+        url: `https://mexenius-store.myshopify.com/apps/proxy-1/customer-cancel-order?order_id=${order_id}`,
         dataType: 'json',
         success: function (data) {
             window.location.href= "/account";

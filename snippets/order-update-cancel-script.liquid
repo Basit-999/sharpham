@@ -41,7 +41,7 @@ for (var i = 0; i < firstJson.length; i++) {
             max_month = '0' + max_month;
         }
         max_order_date = {{ "now" | date: "%Y%m%d" }}
-        if (firstJson[i].Available !== '0' && parseInt(firstJson[i].Available) >= parseInt(quantity)) {
+        if (firstJson[i].Available !== '0' && firstJson[i].Available >= quantity) {
             date = new Date(firstJson[i].start).getDate();
             year = new Date(firstJson[i].start).getFullYear();
             month = (new Date(firstJson[i].start).getMonth()) + 1;
@@ -124,8 +124,7 @@ for (var i = 0; i < firstJson.length; i++) {
     }
 
 
-    function dataMakerChange(date1) {
-        const quantity = parseInt('{{ line_item.quantity }}');
+    function dataMakerChange(date1) {       
         timesArray = [];
         year1 = date1.substring(0, 4);
         month1 = date1.substring(5, 7);
@@ -134,7 +133,7 @@ for (var i = 0; i < firstJson.length; i++) {
         for (var i = 0; i < firstJson.length; i++) {
             startDate = new Date(firstJson[i].start).toISOString().slice(0, 10);
             startDate = new Date(startDate);
-            if (selectDate.getTime() === startDate.getTime() && parseInt(firstJson[i].Available) >= quantity) {
+            if (selectDate.getTime() === startDate.getTime()) {
                 timesArray.push(firstJson[i]);
                 datesAvailable = new Date(firstJson[i].start);
             }
@@ -172,7 +171,7 @@ for (var i = 0; i < firstJson.length; i++) {
         for (var i = 0; i < timesArray.length; i++) {
             getEndDate = new Date(timesArray[i].end);
             getStartDate = new Date(timesArray[i].start);
-            $("#available_time").append('<a data-booking="' + parseInt(timesArray[i].id) + '" data-start='+timesArray[i].start+' data-end='+timesArray[i].end+' data-person=' + parseInt(timesArray[i].Available) + '  data-time="' + formatAMPM(new Date(getStartDate)) + '-' + formatAMPM(new Date(getEndDate)) + '"  href="javascript:void(0)" class="dropdown-item time_dropdown_item">' + formatAMPM(new Date(getStartDate)) + ' - ' + formatAMPM(new Date(getEndDate)) + '</a>');
+            $("#available_time").append('<a data-booking="' + parseInt(timesArray[i].id) + '" data-person=' + parseInt(timesArray[i].Available) + ' data-time="' + formatAMPM(new Date(getStartDate)) + '-' + formatAMPM(new Date(getEndDate)) + '"  href="javascript:void(0)" class="dropdown-item time_dropdown_item">' + formatAMPM(new Date(getStartDate)) + ' - ' + formatAMPM(new Date(getEndDate)) + '</a>');
         }
 
     }
