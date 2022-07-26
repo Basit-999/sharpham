@@ -1,0 +1,95 @@
+<section class="two-bx">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-6 col-md-12">
+        <div class="max-w">
+          <h1>{{section.settings.heading1}}</h1>
+          <h4>{{section.settings.heading2}}</h4>
+          <p>{{section.settings.content}}</p>
+        </div>
+      </div>
+     
+      <div class="col-lg-6 col-md-12 ">
+        <div class="row">
+          {%for block in section.blocks%}
+          <div class="col-md-6">
+            <div class="g-box {%if forloop.index==2%}dark-green{%endif%}">
+              <img src="{{ block.settings.img | img_url:'719x638'}}" alt="" class="w-100" />
+              <div class="green-bx">
+                <h3>{{block.settings.heading}}</h3>
+                <a class="primary-white" href="{{block.settings.btn_link}}">{{block.settings.btn_label}}</a>
+              </div>
+            </div>
+          </div>
+          {%endfor%}
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+{% schema %}
+  {
+    "name": "Tour image with text",
+    "settings": [
+        {
+        "id":"heading1",
+        "type":"textarea",
+        "label":"Heading One",
+        "default":"British Wine and Cheese Tours <br>at The Sharpham Estate, Devon."
+        },
+        {
+        "id":"heading2",
+        "type":"textarea",
+        "label":"Heading Two",
+        "default":"Join us for our up and coming new 2022 tours. Wine tours and Cheese Tastings are at the heart of Sharpham Wine, and here at Sandridge Barton we intend to make the tours even better than ever."
+        },
+        {
+        "id":"content",
+        "type":"textarea",
+        "label":"Heading Three",
+        "default":"Sharpham Wine has settled into it’s new home at Sandridge Barton. The quality of wine tours and cheese tastings is still very much at the forefront of everything we do here at Sandridge Estate, and will continue to be so. From restructured staff to brand new equipment, we’ll soon be ready to open our doors and welcome you all to this wonderful part of the world."
+        }
+	],
+    "blocks": [
+     {
+      "type": "image",
+      "name": "image",
+      "limit":2,
+      "settings": [
+        {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Image",
+        "info": "719x638px recommended"
+        },
+        {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default":"Guided Tasting"
+       },
+  		
+	    {
+        "type": "text",
+        "id": "btn_label",
+        "label": "Button Label",
+        "default":"Book Now"
+        },
+	    {
+        "type": "url",
+        "id": "btn_link",
+        "label": "Banner link"
+        }
+	  
+      ]
+     }
+    ],
+    "presets": [{
+      "name": "Tour image with text"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}

@@ -1,0 +1,64 @@
+<div class="modal fade" id="bottle-pop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            {% for media in product.media %}
+               <img class="d-block w-100" src="{{ media | img_url: 'master' }}" alt="">
+            {%endfor%}
+         </div>
+      </div>
+   </div>
+</div>
+<div class="cheese-area-new">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-lg-6 col-md-12">
+            <div class="bottle-desc deft vc">
+               <h3>{{product.title}}</h3>
+               <p>{{product.description}}</p>
+               <div class="prc mb-vc">{{ product.price | money }} <span>per person</span></div>
+               <form class="form cf">
+                  <span data-product="{{ product.variants.first.id }}" style="display:none" id="product_id_voucher"></span>
+                  <section class="plan cf">
+                     <h5 class="d-none">Extras</h5>
+                     <ul  class="d-none radio-line two vc-new clearfix">
+                        <li>
+                           <input  type="radio" name="radio2" id="freet" value="free"><label class="free-label four col" for="freet">Add Sharpham Rustic - £5</label>
+                        </li>
+                     </ul>
+                     <button class="big-btn"  type="button" data-toggle="modal" data-target="#voucherModal">{{ product.price | money }} - Add to Basket</button>
+                     <p>This voucher is delivered digitally</p>
+                  </section>
+               </form>
+            </div>
+         </div>
+         <div class="col-lg-6 pl-lg-0 col-md-12">
+            <div class="img-box-bottle right-a mt-vc">
+               {% for media in product.media %}
+                  <a class="box-search" href="" data-toggle="modal" data-target="#bottle-pop">
+                     <img src="{{'long-search.svg' | asset_url}}" class="search-iconz">
+                  </a>
+                  <img class="d-block w-100" src="{{ media | img_url: 'master' }}" alt="">
+               {%endfor%}
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% schema %}
+  {
+    "name": "Product Page",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
