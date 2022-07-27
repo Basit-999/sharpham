@@ -1,0 +1,49 @@
+<section class="new-area">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xl-5 col-lg-12">
+        <div class="box-es">
+          <h3>{{section.settings.main_heading}}</h3>
+         {{section.settings.content}}
+          <a href="{{section.settings.link}}" class="green-link">{{section.settings.link_label}}</a>
+        </div>
+      </div>
+      <div class="col-xl-7 col-lg-12">
+        <div class="t-bx"><img src="{{section.settings.img | img_url:'master'}}" class="w-100"></div>
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+  {
+    "name": "Single vouch Img with txt",
+    "settings": [
+	  {
+        "type": "text",
+        "id": "main_heading",
+        "label": "Main Heading",
+        "default":"More Info"
+       },
+       {
+        "type": "textarea",
+        "id": "content",
+        "label": "Content",
+        "default":"<p>A voucher entitling the recipient a friendly, causal tasting of four wines and two cheeses, led by one of our team. You'll learn about the different grape varieties we grow and the techniques we use in the vineyard and winery to craft each style of wine.</p><p>The tastings will be in groups of maximum 12 people and last about one hour. There will be two tastings per day throughout the peak season.</p><p>For more information, please check out our <a href='' class='green-link'>Guided Tasting</a></p>"
+       },
+      {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Image",
+        "info": "1170x920px recommended"
+        }
+
+	],
+    "blocks": [
+    
+    ],
+    "presets": [{
+      "name": "Single voucher Img with text",
+      "category": "HOMEPAGE"
+    }]
+  }
+{% endschema %}

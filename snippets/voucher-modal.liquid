@@ -1,0 +1,48 @@
+<div class="modal fade" id="voucherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <img src="{{ 'Vector-cross.png' | asset_url }}">
+        </button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="voucher_modal_heading">{{ settings.voucher_heading }}</h5>
+            </div>
+            <div class="modal-body">
+                <div class="modal-header">
+                    <h5 class="voucher_modal_heading">{{ settings.voucher_heading }}</h5>
+                </div>
+                <div class="modal_inner">
+                    <form method="post" action="/cart/add" id="voucher_form">
+                        <input type="hidden" name="quantity" value="1">
+                        <input type="hidden" name="id" value="" id="voucher_product_id">
+                    <div class="email_section">
+                        <h5 class="voucher_inner_heading">Email Delivery Information</h5>
+                        <div class="email_section_inner">
+                            <p class="color-black">Recipient’s Email Address</p>
+                            <p class="color-grey">Where this voucher will be sent</p>
+                            <div class="recipient_email">
+                                <input type="email" placeholder="email@example.com" name="properties[Recipient Email]" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="customer_voucher_master">
+                        <h5 class="voucher_inner_heading">Customise Your Voucher</h5>
+                        <div class="customer_voucher_inner">
+                            <p class="color-black">Recipient’s Name printed on voucher</p>
+                            <input type="text" placeholder="e.g. Barry Rogers" name="properties[Recipient Name]"  />
+
+                            <p class="color-black">Senders Name printed on voucher (Your Name)</p>
+                            <input type="text" placeholder="e.g. John Smith" name="properties[Sender Name]"  />
+
+                            <p class="color-black">Custom Message to recipient printed on voucher</p>
+                            <textarea placeholder="e.g. To Barry" name="properties[Recipient Message]" ></textarea>
+                            <button type="button" class="gift-btn single_voucher_confirm">Confirm</button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,83 @@
+<section class="banner">
+   <div class="container-fluid">
+      <div id="carouselExampleIndicators" class="carousel slide position-relative" data-ride="carousel">
+         <ol class="carousel-indicators">
+           {%for block in section.blocks%}
+              <li data-target="#carouselExampleIndicators" data-slide-to="{{forloop.index0}}" class="{%if forloop.index==1%}active{%endif%}"></li>
+           {%endfor%}
+         </ol>
+         <div class="carousel-inner">
+           {%for block in section.blocks%}
+            <div class="carousel-item position-relative {%if forloop.index==1%}active{%endif%}">
+               <img class="d-block w-100" src="{{block.settings.img | img_url:'master'}}" alt="">
+               <div class="box-white bg-white">
+                  <h2 class="heading">{{block.settings.heading}}
+                  </h2>
+                  <p class="fs-16">{{block.settings.content}}</p>
+                  <a href="{{block.settings.btn_link}}" class="btn btn-green">{{block.settings.btn_label}}</a>
+               </div>
+            </div>
+            {%endfor%}
+         </div>
+         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+         <span class="" aria-hidden="true"><img src="{{'arw-left.svg' | asset_url}}" class="img-fluid" alt=""></span>
+         <span class="sr-only">Previous</span>
+         </a>
+         <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+         <span class="" aria-hidden="true"><img src="{{'arw-right.svg' | asset_url}}" class="img-fluid" alt=""></span>
+         <span class="sr-only">Next</span>
+         </a>
+      </div>
+   </div>
+</section>
+{% schema %}
+  {
+    "name": "HomePage Slider",
+    "settings": [
+	 
+	],
+    "blocks": [
+     {
+      "type": "image",
+      "name": "image",
+      
+      "settings": [
+        {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Banner Image",
+        "info": "1848x820px recommended"
+        },
+        {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default":"christmas gifts available online now"
+       },
+  		{
+        "type": "textarea",
+        "id": "content",
+        "label": "Content",
+        "default":"we've put together some great gift boxes so you can treat your loved ones to some delicious sharpham classics this christmas!"
+        },
+	    {
+        "type": "text",
+        "id": "btn_label",
+        "label": "Button Label",
+        "default":"Shop Now"
+        },
+	    {
+        "type": "url",
+        "id": "btn_link",
+        "label": "Banner link"
+        }
+	  
+      ]
+     }
+    ],
+    "presets": [{
+      "name": "HomePage Slider",
+      "category": "HOMEPAGE"
+    }]
+  }
+{% endschema %}

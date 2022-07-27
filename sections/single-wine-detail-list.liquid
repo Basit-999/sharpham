@@ -1,0 +1,42 @@
+<section class="detail-list">
+  <div class="container-fluid">
+  <ul class="five-row clearfix">
+    {%for block in section.blocks%}
+    <li>
+      {{block.settings.heading}}
+     
+    </li>
+   {%endfor%}
+    
+    
+  </ul>
+ </div>
+</section>
+{% schema %}
+  {
+    "name": "Detail list",
+    "settings": [
+	 
+	],
+    "blocks": [
+     {
+      "type": "text",
+      "name": "text",
+      "limit":5,
+      "settings": [
+        {
+        "type": "textarea",
+        "id": "heading",
+        "label": "Content",
+        "default":"christmas gifts available online now"
+       }
+	  
+      ]
+     }
+    ],
+    "presets": [{
+      "name": "Detail list",
+      "category": "HOMEPAGE"
+    }]
+  }
+{% endschema %}

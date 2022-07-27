@@ -1,0 +1,165 @@
+<section class="tours">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-3 col-md-12">
+        <div class="tour-bx">
+          <a href="{{section.settings.btn_link | img_url:'master'}}"><img src="{{ section.settings.img | img_url:'master' }}" alt="" class="w-100" />
+            <h4>{{section.settings.btn_label}} <img src="{{ 'long-arrow.svg' | asset_url }}" alt="" class="arrow-lg" /></h4></a>
+        </div>
+        <div class="tour-bx">
+          <a href="{{section.settings.btn_link1 | img_url:'master'}}"><img src="{{ section.settings.img1 | img_url:'master' }}" alt="" class="w-100" />
+            <h4>{{section.settings.btn_label1}} <img src="{{ 'long-arrow.svg' | asset_url }}" alt="" class="arrow-lg" /></h4></a>
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-12">
+        <div class="tour-three">
+          <img src="{{ section.settings.img_right | img_url:'master' }}" alt="" class="w-100" />
+          <div class="cp-area">
+            <h5>{{section.settings.heading}}</h5>
+            <p>{{section.settings.content}}</p>
+            <a href="{{section.settings.link1}}" class="primary-btn">{{section.settings.btn1}}</a>
+            <a href="{{section.settings.link2}}" class="primary-btn-two">{{section.settings.btn2}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tour-four ">
+      <img src="{{ section.settings.img_bottom | img_url:'master' }}" alt="" class="w-100" />
+      <div class="cp-area new-a">
+        <h5>{{section.settings.heading2}}</h5>
+        <p>{{section.settings.content2}}</p>
+        <h5>{{section.settings.heading3}}</h5>
+        <p>{{section.settings.content3}}</p>
+        <a href="{{section.settings.link3}}" class="primary-btn">{{section.settings.btn3}}</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+  {
+    "name": "Tour Reedeem Section",
+    "settings": [
+        {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Top Image",
+        "info": "736x610px recommended"
+        },
+        {
+        "type": "text",
+        "id": "btn_label",
+        "label": "Link Label",
+        "default":"Book or Redeem Tour"
+        },
+        {
+        "type": "url",
+        "id": "btn_link",
+        "label": "Image Link"
+        },
+        {
+        "type": "image_picker",
+        "id": "img1",
+        "label": "Bottom Image",
+        "info": "736x610px recommended"
+        },
+        {
+        "type": "text",
+        "id": "btn_label1",
+        "label": "Link Label",
+        "default":"Book or Redeem Tour"
+        },
+        {
+        "type": "url",
+        "id": "btn_link1",
+        "label": "Image Link"
+        },
+        {
+        "type": "image_picker",
+        "id": "img_right",
+        "label": "Background Image",
+        "info": "1331x998px recommended"
+        },
+        {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default":"Self-Guided Flights & Walks"
+       },
+       {
+        "type": "textarea",
+        "id": "content",
+        "label": "Content",
+        "default":"Fancy some DIY tasting or just rather a more leisurely stroll around the beautiful grounds? Look no further..."
+       },
+       {
+        "type": "text",
+        "id": "btn1",
+        "label": "Button one",
+        "default":"Self-Guided Tasting flight"
+        },
+        {
+        "type": "url",
+        "id": "link",
+        "label": "Button Link One"
+        },
+        {
+        "type": "text",
+        "id": "btn2",
+        "label": "Button two",
+        "default":"Vineyward Walk"
+        },
+        {
+        "type": "url",
+        "id": "link2",
+        "label": "Button Link Two"
+        },
+         {
+        "type": "image_picker",
+        "id": "img_bottom",
+        "label": "Background Image Bottom",
+        "info": "1331x998px recommended"
+        },
+        {
+        "type": "text",
+        "id": "heading2",
+        "label": "Heading",
+        "default":"Tours & Weather"
+       },
+       {
+        "type": "textarea",
+        "id": "content2",
+        "label": "Content",
+        "default":"All our tours are weather dependent, so please give us a call in advance if you are unsure."
+       },
+       {
+        "type": "text",
+        "id": "heading3",
+        "label": "Heading Two ",
+        "default":"We Love Dogs"
+       },
+       {
+        "type": "textarea",
+        "id": "content3",
+        "label": "Content Two",
+        "default":"We love well-behaved dogs, and welcome them to join us on the tours. We just ask that you ensure you clean up after them, and that they are comfortable around groups of people."
+       },
+       {
+        "type": "text",
+        "id": "btn3",
+        "label": "Button Three",
+        "default":"View Our Full Terms & Conditions"
+        },
+        {
+        "type": "url",
+        "id": "link3",
+        "label": "Button Link Three"
+        }
+ 	],
+    "presets": [{
+      "name": "Tour Reedeem Section"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}

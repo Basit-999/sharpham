@@ -1,0 +1,72 @@
+<section class="evironment">
+  <div class="container-fluid">
+    <div class="grey-bx">
+      <div class="row">
+        <div class="col-lg-5 col-md-12">
+          <div class="text-bx">
+            <h3>{{section.settings.heading}}</h3>
+            <p>{{section.settings.content}}</p>
+            <a href="{{section.settings.link}}" class="btn btn-green">{{section.settings.btn_label}}</a>
+           
+          </div>
+        </div>
+        <div class="col-lg-7 col-md-12">
+          <div class="position-area">
+            <img src="{{section.settings.img| img_url:'master'}}" alt="" class="w-100 dsk-screen" />
+            <img src="{{section.settings.img2| img_url:'master'}}" alt="" class="w-100 big-screen" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+  {
+    "name": "Environment Section",
+    "settings": [
+     {
+        "id":"heading",
+        "type":"textarea",
+        "label":"Heading",
+        "default":"keeping the rural <span class='d-block'> environment alive</span>"
+        },
+        {
+        "id":"content",
+        "type":"textarea",
+        "label":"Content",
+        "default":"Classic English wines are produced at Sharpham vineyard as a result of a happy marriage of soil, climate and grape variety known as terroir, and nature has bestowed her gifts freely upon us here at Sharpham. In the winery, we employ both New World and traditional techniques to best develop our unique regional characteristics. Our tally of International Awards confirms our position as one of England's foremost quality wine producers. We invite you to visit, sample, and make up your own minds about our fine English wine."
+        },
+        {
+        "id":"btn_label",
+        "type":"text",
+        "label":"Button Label",
+        "default":"Shop Now"
+        },
+        {
+        "id":"link",
+        "type":"url",
+        "label":"Button Link"
+        },
+        {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Desktop Image",
+        "info": "1135x607px recommended"
+        },
+        {
+        "type": "image_picker",
+        "id": "img2",
+        "label": "Big Screen Image",
+        "info": "1135x607px recommended"
+        }
+	],
+    "presets": [{
+      "name": "Environment Section",
+      "category": "HOMEPAGE"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
