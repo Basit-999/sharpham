@@ -1,0 +1,202 @@
+<div class="modal fade" id="bottle-pop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img class="d-block w-100" src="{{ 'cheese-area.jpg' | asset_url }}" alt="">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="cheese-area-new">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-lg-6 col-md-12">
+                <div class="bottle-desc">
+                    <h3>Sharpham Rustic</h3>
+                    <p>First made in the early 1990’s at Ticklemore dairy, Rustic production moved to the new Sharpham
+                        Dairy in 2003 and has become one of the most popular cheeses in the region. Crumbly texture,
+                        golden colour and a delicate, slightly citrus flavour, Sharpham Rustic is irresistible when
+                        served with oatcakes and a sweet chutney along with a glass (or two) of crisp what wine (I
+                        choose Sharpham Estate Selection).</p>
+
+                    <form class="form cf">
+                        <section class="plan cf">
+                            <ul class="radio-line clearfix">
+                                <li>
+                                    <input checked type="radio" name="radio1" id="free" value="free"><label
+                                            class="free-label four col" for="free">500g - £8</label>
+                                </li>
+                                <li class="er">
+                                    <input type="radio" name="radio1" id="basic" value="basic"><label
+                                            class="basic-label four col" for="basic">1.7kg - £25</label>
+                                    <span> <img class="d-block w-100" src="{{ 'mark.svg' | asset_url }}" alt=""> Sorry, Out of stock</span>
+                                </li>
+                            </ul>
+
+                            <h5>Extras</h5>
+                            <ul class="radio-line two clearfix">
+                                <li>
+                                    <input type="radio" name="radio2" id="freet" value="free"><label
+                                            class="free-label four col" for="freet">Add Free Gift Message?</label>
+                                </li>
+                            </ul>
+                            <ul class="sp-q clearfix">
+
+                                <li><a href="" class="big-btn">£16 - Add to Basket</a></li>
+                                <li>
+                                    <div class="sp-quantity">
+                                        <div class="sp-plus fff"><a class="ddd" href="javascript:void(0);"><i
+                                                        class="fa fa-angle-up" aria-hidden="true"></i><span
+                                                        class="d-none">+</span></a>
+
+                                            <div class="sp-input">
+                                                <input type="text" class="quntity-input" value="1"/>
+                                            </div>
+                                            <div class="sp-minus fff">
+                                                <a class="ddd" href="javascript:void(0);"><i class="fa fa-angle-down"
+                                                                                             aria-hidden="true"></i><span
+                                                            class="d-none">-</span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <span>£9.50 standard delivery rate or free shipping on orders over £120</span>
+
+                            <div class="main-ac" id="main">
+                                <div class="accordion" id="faq">
+                                    <div class="card">
+                                        <div class="card-header" id="faqhead2">
+                                            <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse"
+                                               data-target="#faq11"
+                                               aria-expanded="true" aria-controls="faq2">Nutritional Information</a>
+                                        </div>
+
+                                        <div id="faq11" class="collapse" aria-labelledby="faqhead2" data-parent="#faq">
+                                            <div class="card-body">
+                                                <p>Energy value 1177kj / 283kcal, Fat 20.50 - Of which saturates 16.36,
+                                                    <br>
+                                                    Carbohydrate 6.3 - Of which sugars 5.8, Protein 18.3, Salt 1.75</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+                        </section>
+                    </form>
+
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="img-box-bottle right-a">
+                    <a class="box-search" href="" data-toggle="modal" data-target="#bottle-pop"> <img
+                                src="{{ 'long-search.svg' | asset_url }}" class="search-iconz"></a>
+                    <img class="d-block w-100" src="{{ 'single-ch.jpg' | asset_url }}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="wide-img-cheese">
+    <img src="{{ 'cheese-big.jpg' | asset_url }}" class="w-100">
+</section>
+
+<section class="detail-list">
+    <div class="container-fluid">
+        <ul class="five-row new-one">
+            <li>
+                <span>Style</span>
+                <h6>Semi-Hard</h6>
+            </li>
+            <li>
+                <span>Milk Variety</span>
+                <h6>Jersey Cow</h6>
+            </li>
+            <li>
+                <span>Vegetarian</span>
+                <h6>Yes</h6>
+            </li>
+            <li>
+                <span>Unpasterurised?</span>
+                <h6>Yes</h6>
+            </li>
+            <li>
+                <span>Allergens</span>
+                <h6>Milk</h6>
+            </li>
+            <li>
+                <span>Ingredients</span>
+                <h6>Milk, salt, starter cultures, vegetable rennet</h6>
+            </li>
+
+        </ul>
+    </div>
+</section>
+
+<section class="wide-img mrg-bt">
+    <div class="container-fluid">
+        <div class="img-a">
+            <img src="{{ 'wine-making.jpg' | asset_url }}" class="w-100">
+            <div class="wht-bx">
+                <h3>Cheese Making</h3>
+                <p>After hand moulding into basket moulds, the cheese is drained for 48 hours before being dry salted by
+                    hand. As the coat of the cheese grows, it is rubbed by hand to form the thin, natural rind and the
+                    cheeses are turned weekly.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="two-sec mrg-bt">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="img-a scnd-bx">
+                    <img src="{{ 'food-p.jpg' | asset_url }}" class="w-100">
+                    <div class="wht-bx">
+                        <h3>Storage</h3>
+                        <p>A full size cheese will have a maximum shelf life of 1 month from the date of dispatch, and 2
+                            months for our wholesale customers. The smaller cheeses have a shorter shelf life as they
+                            will ripen faster. The mini or medium cheeses will have a shelf life of 2-3 weeks from the
+                            date of dispatch. Please specify if there is a particular date on which you wish to eat the
+                            cheese.
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="img-a lst-bx">
+                    <img src="{{ 'acc.jpg' | asset_url }}" class="w-100">
+                    <div class="wht-bx">
+                        <h3>Accolades</h3>
+
+                        <ul class="list-dot">
+                            <li>Gold - International Cheese Awards 2018</li>
+                            <li>Gold - Taste of the West 2018 Bronze - World Cheese Awards 2017</li>
+                            <li>Silver - Artisan Cheese Awards 2017</li>
+                            <li>Gold - Devon County Show 2016</li>
+                            <li>Gold - British Cheese Awards 2016</li>
+
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
