@@ -1,0 +1,180 @@
+{% comment %}theme-check-disable UndefinedObject{% endcomment %}
+{{ 'section-footer.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" href="{{ 'component-newsletter.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-list-payment.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-list-social.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-rte.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'disclosure.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<noscript>{{ 'component-newsletter.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-list-menu.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-list-payment.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-list-social.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-rte.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'disclosure.css' | asset_url | stylesheet_tag }}</noscript>
+<footer>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-logo">
+          <img src="{{'logo-black.svg' | asset_url }}" alt="" />
+        </div>
+        <h5>Keep up with the news</h5>
+        <div class="input-space">
+          <input type="email" placeholder="Enter Email Address" />
+          <input type="button" value="Join" />
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-6">
+        <h6>Go To</h6>
+        <ul class="f-list">
+          {% for link in linklists[section.settings.footer_menu1].links %}
+           <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="cont">
+          <h6>Find & Connect</h6>
+          <p>{{section.settings.address}}
+          </p>
+          <ul class="social-list clearfix">
+            
+            {% if section.settings.fb_link !=blank%}<li><a href="{{section.settings.fb_link}}"><img src="{{ 'facebook.svg' | asset_url }}" alt="" /></a></li>{%endif%}
+            {% if section.settings.in_link !=blank%}<li><a href="{{section.settings.in_link}}"><img src="{{ 'instagram.svg' | asset_url }}" alt="" /></a></li>{%endif%}
+            {% if section.settings.tw_link !=blank%}<li><a href="{{section.settings.tw_link}}"><img src="{{ 'twitter.svg' | asset_url }}" alt="" /></a></li>{%endif%}
+            {% if section.settings.owl_link !=blank%}<li><a href="{{section.settings.owl_link}}"><img src="{{ 'owl.svg' | asset_url }}" alt="" /></a></li>{%endif%}
+            
+            <li><a href="" class="text-green">View Tide Times 
+              <img src="{{ 'd-arrow.svg' | asset_url }}" class="img-fluid d-arrow" alt=""></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="box-footer">
+          <img src="{{ 'rol.png' | file_url }}" class="img-fluid" alt="">
+          <hr>
+          <div class="media2">
+            <img class="mr-3" src="{{'lg.png' | file_url }}">
+            <div class="media-body">
+              <p class="media-content mb-0">Purchase of equipment used for the production of wine is part funded by the European Agricultural Fund for Rural Development.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-cpy text-center">
+    <div class="container-fluid">
+      <p class="text-white mb-0">&copy; Copyright {{ 'now' | date: "%Y" }}  {{ shop.name | link_to: routes.root_url }}  All Rights Reserved  | Designed by White Space Advertising Ltd.</p>
+      <span class="text-white mb-0">{{section.settings.bottom_text}}</span>
+    </div>
+  </div>
+</footer>
+
+{% javascript %}
+  class LocalizationForm extends HTMLElement {
+    constructor() {
+      super();
+      this.elements = {
+        input: this.querySelector('input[name="locale_code"], input[name="country_code"]'),
+        button: this.querySelector('button'),
+        panel: this.querySelector('ul'),
+      };
+      this.elements.button.addEventListener('click', this.openSelector.bind(this));
+      this.elements.button.addEventListener('focusout', this.closeSelector.bind(this));
+      this.addEventListener('keyup', this.onContainerKeyUp.bind(this));
+
+      this.querySelectorAll('a').forEach(item => item.addEventListener('click', this.onItemClick.bind(this)));
+    }
+
+    hidePanel() {
+      this.elements.button.setAttribute('aria-expanded', 'false');
+      this.elements.panel.setAttribute('hidden', true);
+    }
+
+    onContainerKeyUp(event) {
+      if (event.code.toUpperCase() !== 'ESCAPE') return;
+
+      this.hidePanel();
+      this.elements.button.focus();
+    }
+
+    onItemClick(event) {
+      event.preventDefault();
+      const form = this.querySelector('form');
+      this.elements.input.value = event.currentTarget.dataset.value;
+      if (form) form.submit();
+    }
+
+    openSelector() {
+      this.elements.button.focus();
+      this.elements.panel.toggleAttribute('hidden');
+      this.elements.button.setAttribute('aria-expanded', (this.elements.button.getAttribute('aria-expanded') === 'false').toString());
+    }
+
+    closeSelector(event) {
+      const shouldClose = event.relatedTarget && event.relatedTarget.nodeName === 'BUTTON';
+      if (event.relatedTarget === null || shouldClose) {
+        this.hidePanel();
+      }
+    }
+  }
+
+  customElements.define('localization-form', LocalizationForm);
+{% endjavascript %}
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "footer_menu1",
+        "label": "Footer Menu 1"
+      },
+      {
+        "type": "link_list",
+        "id": "footer_menu2",
+        "label": "Footer Menu 2"
+      },
+      {
+        "type": "textarea",
+        "id": "address",
+        "label": "Shop Address",
+        "default":"Sharpham Estate, Totnes, Devon TQ9 7UT<br> T: 01803 732 203"
+      },
+       {
+        "type": "textarea",
+        "id": "bottom_text",
+        "label": "Bottom text",
+        "default":"Sandridge Barton Wines Ltd is a company registered in England &amp; Wales No 11938282. Registered office: Sandridge Barton, Waddeton Road, Stoke Gabriel, Devon, United Kingdom, TQ9 6RL. Sharpham cheeses are hand-produced by Sharpham Partnership Limited"
+      },
+	  {
+        "type": "url",
+        "id": "fb_link",
+        "label": "Facebook link",
+        "info":"https://www.facebook.com/shopify"
+      },
+      {
+        "type": "url",
+        "id": "in_link",
+        "label": "Instagram link",
+        "info":"https://www.instagram.com/shopify"
+      },
+      {
+        "type": "url",
+        "id": "tw_link",
+        "label": "Twitter link",
+        "info":"https://www.twitter.com/shopify"
+      },
+      {
+        "type": "url",
+        "id": "owl_link",
+        "label": "Owl link",
+        "info":"https://www.owl.com/shopify"
+      }
+
+    ]
+  }
+{% endschema %}
