@@ -1,0 +1,30 @@
+<section class="btimg">
+   <div class="container-fluid">
+      <img src="{{section.settings.img | img_url:'master'}}" alt="" class="w-100" />
+   </div>
+</section>
+{% schema %}
+  {
+    "name": "Guide Image section",
+    "settings": [
+        
+        {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Background Image",
+        "info": "1331x700px recommended"
+        }
+        
+	],
+    "presets": [{
+      "name": "Guide Image section",
+      "category": "HOMEPAGE"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

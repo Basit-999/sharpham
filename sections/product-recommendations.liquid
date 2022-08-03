@@ -1,0 +1,171 @@
+<link rel="stylesheet" href="{{ 'component-card.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-product-grid.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'section-product-recommendations.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<noscript>{{ 'component-card.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-price.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-product-grid.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'section-product-recommendations.css' | asset_url | stylesheet_tag }}</noscript>
+
+<product-recommendations class="product-recommendations page-width" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=4">
+  {% if recommendations.performed and recommendations.products_count > 0 %}
+    <h2 class="product-recommendations__heading" style="text-align: center;    font-weight: bold;font-family: 'visbyslabcf-medium';color: #848A2D;">{{ section.settings.heading | escape }}</h2>
+    <ul class="continer product-slider grid grid--2-col product-grid{% if recommendations.products_count > 3 %} grid--4-col-desktop grid--quarter-max{% else %} grid--{{ recommendations.products_count }}-col-tablet{% endif %}" role="list">
+      {% for product in recommendations.products %}
+        <div class="modal fade" id="{{ product.handle }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                {% for media in product.media %}
+                  <img class="d-block w-100" src="{{ media | img_url: 'master' }}" alt="">
+                {%endfor%}
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <li class="item col-md-3" style="    margin: 24px 0;">
+          <div class="box mb-2" style="text-align: center;">
+            <a href="{{ product.url }}" style="display: block;">
+              <img src="{{ product.featured_image.src | img_url: 'x270' }}">
+
+            </a>
+            <ul class="icon">
+              <form method="post" action="/cart/add">
+                <li>
+                  <input type="hidden" name="id" value="{{ product.variants.first.id }}"/>
+                  <button type="submit" class="btn" alt="">
+                    <img src="{{ 'cart-p.svg' | asset_url }}" alt=""/></button>
+                </li>
+              </form>
+              <li><a href="#"><img src="{{ 'heart-p.svg' | asset_url }}" alt=""/></a></li>
+
+              <li><a href="" data-toggle="modal" data-target="#{{ product.handle }}">
+                  <img src="{{ 'plus-p.svg' |asset_url }}" alt=""/>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <a href="{{ product.url }}">
+            <h3>{{ product.title }}</h3>
+          </a>
+          <p class="mb-0"><span>Bottle</span> {{ product.price | money | remove:" " }}</p>
+          <p><span>Case</span> {{ product.price | money | remove:" " }} <span class="text-danger"><del>{{ product.compare_at_price | money | remove:" " }}</del></span>
+          </p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</product-recommendations>
+
+{% javascript %}
+  class ProductRecommendations extends HTMLElement {
+    constructor() {
+      super();
+
+      const handleIntersection = (entries, observer) => {
+        if (!entries[0].isIntersecting) return;
+        observer.unobserve(this);
+
+        fetch(this.dataset.url)
+          .then(response => response.text())
+          .then(text => {
+            const html = document.createElement('div');
+            html.innerHTML = text;
+            const recommendations = html.querySelector('product-recommendations');
+            if (recommendations && recommendations.innerHTML.trim().length) {
+              this.innerHTML = recommendations.innerHTML;
+            }
+          })
+          .catch(e => {
+            console.error(e);
+          });
+      }
+
+      new IntersectionObserver(handleIntersection.bind(this), {rootMargin: '0px 0px 200px 0px'}).observe(this);
+    }
+  }
+
+  customElements.define('product-recommendations', ProductRecommendations);
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.product-recommendations.name",
+  "tag": "section",
+  "class": "spaced-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:sections.product-recommendations.settings.paragraph__1.content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "You may also like",
+      "label": "t:sections.product-recommendations.settings.heading.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.product-recommendations.settings.header__2.content"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.product-recommendations.settings.image_ratio.options__1.label"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.product-recommendations.settings.image_ratio.options__2.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.product-recommendations.settings.image_ratio.options__3.label"
+        }
+      ],
+      "default": "adapt",
+      "label": "t:sections.product-recommendations.settings.image_ratio.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": false,
+      "label": "t:sections.product-recommendations.settings.show_secondary_image.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "add_image_padding",
+      "default": false,
+      "label": "t:sections.product-recommendations.settings.add_image_padding.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image_outline",
+      "default": true,
+      "label": "t:sections.product-recommendations.settings.show_image_outline.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "t:sections.product-recommendations.settings.show_vendor.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": false,
+      "label": "t:sections.product-recommendations.settings.show_rating.label",
+      "info": "t:sections.product-recommendations.settings.show_rating.info"
+    }
+  ]
+}
+{% endschema %}

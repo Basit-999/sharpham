@@ -1,0 +1,28 @@
+<section class="wide-img">
+<img src="{{section.settings.img | img_url:'master'}}" class="w-100">
+</section>
+{% schema %}
+  {
+    "name": "Single Wine Banner",
+    "settings": [
+        {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Image",
+        "info": "1858x485px recommended"
+        }
+	],
+    "presets": [{
+      "name": "Single Wine Banner",
+      "category": "HOMEPAGE"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
+
