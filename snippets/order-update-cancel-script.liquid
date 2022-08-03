@@ -1,0 +1,179 @@
+<script>
+    var date, year, month, orderDate, firstJson, enableDate = new Array(), disableDate = new Array(),
+        timesArray = new Array(), datesAvailable, quantity, orderPrice, year1, month1, day1, getEndDate, getStartDate,
+        startDate;
+setTimeout(function () {
+    const persons = $(".calendr").find("input[name='properties[Persons]']").val();
+    orderDate = new Date('{{ startDate }}');
+    timeDifference('{{ endDate }}', '{{ startDate }}');
+
+    function timeDifference(date1, date2) {
+        date1 = new Date(date1);
+        date2 = new Date(date2);
+
+        var difference = date1.getTime() - date2.getTime();
+
+        var daysDifference = Math.floor(difference / 1000 / 60 / 60 / 24);
+        difference -= daysDifference * 1000 * 60 * 60 * 24;
+
+        var hoursDifference = Math.floor(difference / 1000 / 60 / 60);
+        difference -= hoursDifference * 1000 * 60 * 60;
+
+        var minutesDifference = Math.floor(difference / 1000 / 60);
+        difference -= minutesDifference * 1000 * 60;
+
+        var secondsDifference = Math.floor(difference / 1000);
+        if (minutesDifference > 0) {
+            document.getElementById("booking_duration{{ line_item.id }}").innerHTML = hoursDifference + ' hour/s ' + minutesDifference + ' minute/s';
+        } else {
+            document.getElementById("booking_duration{{ line_item.id }}").innerHTML = hoursDifference + ' hour/s';
+        }
+    }
+
+    firstJson = $(".product_json{{ line_item.id }}").text();
+    firstJson = JSON.parse(firstJson);
+    const quantity = parseInt('{{ line_item.quantity }}');
+
+    for (var i = 0; i < firstJson.length; i++) {
+        max_month = {{ "now" | date: "%m" }} 
+        if ( max_month < 10) {
+            max_month = '0' + max_month;
+        }
+        max_order_date = {{ "now" | date: "%Y%m%d" }}
+        if (firstJson[i].Available !== '0' && firstJson[i].Available >= quantity) {
+            date = new Date(firstJson[i].start).getDate();
+            year = new Date(firstJson[i].start).getFullYear();
+            month = (new Date(firstJson[i].start).getMonth()) + 1;
+            if (date < 10) {
+                date = '0' + date;
+            }
+          
+            if (max_month < 10) {
+              var date_compare_value = (year + '-0' + month + '-' + date);
+              var date_compare_value2 = (year + '0' + month  + date);
+            } else {
+                var date_compare_value = (year + '-' + month + '-' + date);
+                var date_compare_value2 = (year  + month  + date);
+            
+            }
+          if(date_compare_value2 >= max_order_date ){
+            enableDate.push(date_compare_value);
+          }
+          
+            
+        }
+    }
+    for (var i = 0; i < firstJson.length; i++) {
+        if (firstJson[i].Available < quantity) {
+            var dateArray = {
+                name: 'offer',
+                date: moment(firstJson[i].start).format("YYYY-MM-DD")
+            };
+            disableDate.push(dateArray);
+        }
+    }
+    var minDate = moment().set().format('YYYY-MM-DD');
+    setTimeout(function () {
+        $('.cancel-select-calendar{{ line_item.id }}').pignoseCalendar({
+            select: onSelectHandlerBooking,
+            enabledDates: enableDate,
+            minDate,
+            scheduleOptions: {
+                colors: {
+                    offer: 'transparent',
+                }
+            },
+            schedules: disableDate,
+            date: moment(orderDate.getFullYear() + '-' + (orderDate.getMonth() + 1 ) + '-' + orderDate.getDate())
+        });  
+        dataMakerChange(moment(orderDate).format("YYYY-MM-DD"))
+    }, 1000);
+
+    function onSelectHandlerBooking(date, context) {
+        var $element = context.element;
+        var $calendar = context.calendar;
+        var $box = $element.siblings('.box').show();
+        var text = 'You selected date ';
+        if (date[0] !== null) {
+            text += date[0].format('YYYY-MM-DD');
+        }
+
+        if (date[0] !== null && date[1] !== null) {
+            text += ' ~ ';
+        } else if (date[0] === null && date[1] == null) {
+            text += 'nothing';
+        }
+
+        if (date[1] !== null) {
+            text += date[1].format('YYYY-MM-DD');
+        }
+        if (date[0] !== null) {
+            dataMakerChange(date[0].format('YYYY-MM-DD'));
+        }
+        $box.text(text);
+    }
+
+
+    function dataMakerChange(date1) { 
+      
+        timesArray = [];
+        year1 = date1.substring(0, 4);
+        month1 = date1.substring(5, 7);
+        day1 = date1.substring(8, 10);
+        selectDate = new Date(date1);
+       const bookedPersons = document.querySelector("#booking_person");
+
+        const Adults = bookedPersons.innerText.split(" ")[0] ?? 0;
+      console.log("Adults", Adults)
+        for (var i = 0; i < firstJson.length; i++) {
+            startDate = new Date(firstJson[i].start).toISOString().slice(0, 10);
+            startDate = new Date(startDate);
+          console.log(selectDate.getTime() , startDate.getTime(), Adults)
+            if (selectDate.getTime() === startDate.getTime()) {
+              if(firstJson[i].Available >= Number(Adults)){ 
+                timesArray.push(firstJson[i]);
+              }
+              datesAvailable = new Date(firstJson[i].start);
+            }
+        }
+
+        $(".calendr").find("#available_date").html('');
+        $(".calendr").find("#available_time").html('');
+        let monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        $(".calendr").find("#available_date_selected").text(monthNames[datesAvailable.getMonth()] + ', ' + datesAvailable.getDate() + ', ' + datesAvailable.getFullYear());
+
+        $(".calendr").find("#available_date").append('<a href="javascript:void(0)" class="dropdown-item active">' + monthNames[datesAvailable.getMonth()] + ', ' + startDate.getDate() + ', ' + startDate.getFullYear() + '</a>');
+        $(".calendr").find("input[name='properties[start]']").val(timesArray[0].start);
+        $(".calendr").find("input[name='properties[end]']").val(timesArray[0].end);
+
+
+        getEndDate = new Date(timesArray['0'].end);
+        getStartDate = new Date(timesArray['0'].start);
+
+        $("#available_time_selected").text(formatAMPM(new Date(getStartDate)) + ' - ' + formatAMPM(new Date(getEndDate)));
+        $(".calendr").find("input[name='properties[Time]']").val(formatAMPM(new Date(getStartDate)) + ' - ' + formatAMPM(new Date(getEndDate)));
+        $(".calendr").find("input[name='properties[Id]']").val(timesArray['0'].id);
+
+        $("#available_person").html('');
+
+        for (let i = 1; i <= parseInt(timesArray['0'].Available); i++) {
+            if (i === 1) {
+                $("#available_person").append('<a  data-qty="' + i + '" data-selectPerson=' + i + ' Adult" href="javascript:void(0)" class="dropdown-item active person_dropdown_list">' + i + ' Adult</a>')
+            } else {
+                $("#available_person").append('<a  data-qty="' + i + '" data-selectPerson="' + i + ' Adults" href="javascript:void(0)" class="dropdown-item person_dropdown_list">' + i + ' Adults</a>')
+            }
+        }
+        for (var i = 0; i < timesArray.length; i++) {
+            getEndDate = new Date(timesArray[i].end);
+            getStartDate = new Date(timesArray[i].start);
+            $("#available_time").append('<a data-booking="' + timesArray[i].id + '" data-person=' + parseInt(timesArray[i].Available) + ' data-time="' + formatAMPM(new Date(getStartDate)) + '-' + formatAMPM(new Date(getEndDate)) + '"  href="javascript:void(0)" class="dropdown-item time_dropdown_item">' + formatAMPM(new Date(getStartDate)) + ' - ' + formatAMPM(new Date(getEndDate)) + '</a>');
+        }
+
+    }
+
+},2000);
+
+</script>
