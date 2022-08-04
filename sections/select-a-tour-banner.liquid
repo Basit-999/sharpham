@@ -1,0 +1,25 @@
+<section class="main-banner">
+  <div class="container-fluid">
+    <img src="{{section.settings.img | img_url:'master'}}" alt="" />
+  </div>
+</section>
+{% schema %}
+  {
+    "name": "Tour Banner Section",
+    "settings": [
+        {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Banner Image",
+        "info": "1135x800px recommended"
+        }
+	],
+    "presets": [{
+      "name": "Tour Banner Section"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+

@@ -1,0 +1,44 @@
+<section class="award-area">
+   <div class="container-fluid">
+      <h2>{{section.settings.heading}}</h2>
+      <p>{{section.settings.content}}</p>
+      <img src="{{section.settings.img| img_url:'master'}}" alt="" class="mx-auto d-block mt-3" />
+   </div>
+</section>
+{% schema %}
+  {
+    "name": "HomePage Certificate",
+    "settings": [
+     {
+        "id":"heading",
+        "type":"textarea",
+        "label":"Heading",
+        "default":"Award Winning British Sharpham Wine from Sandridge Barton Vineyard, Devon"
+        },
+        {
+        "id":"content",
+        "type":"textarea",
+        "label":"Content",
+        "default":"Classic English wines are produced at Sharpham vineyard as a result of a happy marriage of soil, climate and grape variety known as terroir, and nature has bestowed her gifts freely upon us here at Sharpham. In the winery, we employ both New World and traditional techniques to best develop our unique regional characteristics. Our tally of International Awards confirms our position as one of England's foremost quality wine producers. We invite you to visit, sample, and make up your own minds about our fine English wine."
+        },
+        {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Certificate Image",
+        "info": "269x48px recommended"
+        }
+	],
+    "presets": [{
+      "name": "HomePage Certificate",
+      "category": "HOMEPAGE"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
+

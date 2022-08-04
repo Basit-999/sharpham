@@ -1,0 +1,48 @@
+<section class="wide-img mrg-bt">
+  <div class="container-fluid">
+    <div class="img-a">
+    <img src="{{section.settings.img | img_url:'master'}}" class="w-100">
+      <div class="wht-bx">
+        <h3>{{section.settings.heading}}</h3>
+         {{section.settings.content}}
+      </div>
+  </div>
+    </div>
+</section>
+{% schema %}
+  {
+    "name": "Wine Image with text",
+    "settings": [
+        {
+        "id":"heading",
+        "type":"textarea",
+        "label":"Heading",
+        "default":"Wine Making"
+        },
+        {
+        "id":"content",
+        "type":"textarea",
+        "label":"Content",
+        "default":"<p>Our cleanest Pinot Noir fruit is part crushed and cold macerated for at least a week prior to the fermentation with the inclusion of some whole bunch and stems. There is a post fermentation maceration period of at least a week before a partial malolactic fermentation. This wine then spent 6 months in second fill French oak barrels prior to bottling.</p>"
+        },
+        {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Background Image",
+        "info": "1885x485px recommended"
+        }
+        
+	],
+    "presets": [{
+      "name": "Single wine Image with text",
+      "category": "HOMEPAGE"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
