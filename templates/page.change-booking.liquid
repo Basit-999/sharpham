@@ -1,0 +1,122 @@
+{% assign product = all_products['bookable-product'] %}
+<span class="product_json" style="display: none">{{ product.metafields.global.availability }}</span>
+<div class="container-fluid">
+    <section class="c-bk-banner">
+
+        <div class="c-box">
+            <h1>Change Your Tour Booking</h1>
+            <p>We’re sorry you’re unable to join us for your tour. </p>
+
+            <p>Below is the current time and date, along with how many people your tour is booked for with us. If you
+                wish to change or cancel your booking, please do so below.</p>
+
+            <p>Please note: You may only modify a booking if it’s more than 4 days away, and this can only be done once.
+                For any further issues or problems, please call us on <a href="tel:01803 228773" class="call-no">01803
+                    228773</a> or Email <a href="mailto:help@sandridgebarton.com" class="email-clr">help@sandridgebarton.com</a>
+            </p>
+        </div>
+
+    </section>
+</div>
+<section class="your-booking">
+    <div class="container-fluid">
+        <h2 class="main-hh">Your <span>[Show Tour Type Here]</span> Booking</h2>
+        <div class="booking-bg">
+            <ul class="v-detail clearfix">
+                <li>
+                    <b> Booking Date</b><span id="booking_date">November 25, 2022</span>
+                </li>
+                <li>
+                    <b>Booking Time</b><span id="booking_time">12.00pm - 1.30pm</span>
+
+                </li>
+                <li>
+                    <p>Need to change quantiies? please call us on <a class="small-no" href="tel:01803 228773">01803
+                            228773</a></p>
+                </li>
+            </ul>
+            <ul class="pro-vc clearfix">
+                <li>
+
+                    <b> Price</b>
+                    <span id="booking_price">£45</span>
+                </li>
+                <li>
+                    <b>Quantity</b>
+                    <span id="booking_person">3 People</span>
+                </li>
+                <li>
+                    <b> Duration</b> <span id="booking_duration">1 hour 30 minutes</span>
+                </li>
+            </ul>
+        </div>
+        <div class="booking-bg">
+            <h2>Change Your Booking</h2>
+          <h3>{{ product.metafields.global.availability }}</h3>
+            <div class="calendr">
+
+
+                <div id="multiple" class="article">
+                    <span id="init_booking_date" style="display: none"></span>
+                    <div class="cancel-select-calendar"></div>
+
+                    <ul class="date-area clearfix">
+                        <li>
+                            <div class="selectBox caln dates_div">
+                                <div class="selectBox__value" id="available_date_selected"></div>
+                                <div class="dropdown-menu" id="available_date">
+                                    <a href="javascript:void(0)" class="dropdown-item active"></a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="selectBox times_div">
+                                <div class="selectBox__value" id="available_time_selected"></div>
+                                <div class="dropdown-menu" id="available_time">
+
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="selectBox persons_div">
+                                <div class="selectBox__value" id="available_person_selected"></div>
+                                <div class="dropdown-menu" id="available_person">
+                                    <a href="javascript:void(0)" class="dropdown-item active">3 Adults</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="form_attributes">
+                        <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                        <input type="hidden" name="quantity" value="1" />
+                        <input type="hidden" name="properties[Id]" value="" />
+                        <input type="hidden" name="properties[start]" value="" />
+                        <input type="hidden" name="properties[end]" value="" />
+                        <input type="hidden" name="properties[Time]" value="" />
+                        <input type="hidden" name="properties[Persons]" value="" />
+                        <button type="button" class="book-tour update_tour">
+                            <span class="product_price_calender" data-price="{{ product.price_min | money_without_currency }}">
+                                {{ product.price_min | money_without_trailing_zeros }}
+                            </span>
+                            Change Booking
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="booking-bg smlk">
+            <h2>Can’t make it, but not ready to rebook yet?</h2>
+            <button class="red-btn" id="order_delete">Cancel Tour Booking</button>
+        </div>
+    </div>
+</section>
+<div class="container-fluid">
+    <section class="booking-area-bt">
+        <div class="c-bx">
+            <h4>For Your Booking</h4>
+            <p>Just come along on the day with the details for your booking so we can confirm you for the tour.</p>
+        </div>
+    </section>
+</div>

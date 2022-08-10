@@ -1,0 +1,41 @@
+<section class="two-imgs">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-7">
+        <div class="t-bx mrg-30"><img src="{{section.settings.l_img | img_url:'master'}}" class="w-100"></div>
+      </div>
+      <div class="col-md-5">
+      <div class="t-bx">
+          <div class="t-bx"><img src="{{section.settings.r_img | img_url:'master'}}" class="w-100"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+  {
+    "name": "Section Voucher Images",
+    "settings": [
+	   {
+        "type": "image_picker",
+        "id": "l_img",
+        "label": "Left Image",
+        "info": "994x765px recommended"
+        },
+        {
+        "type": "image_picker",
+        "id": "r_img",
+        "label": "Right Image",
+        "info": "829x908px recommended"
+        }
+        
+	],
+    "blocks": [
+    
+    ],
+    "presets": [{
+      "name": "Section Voucher Images",
+      "category": "HOMEPAGE"
+    }]
+  }
+{% endschema %}

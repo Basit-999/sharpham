@@ -1,0 +1,81 @@
+<section class="two-bx">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-lg-6 col-md-12">
+           {% assign product = all_products[section.settings.product] %}
+           {% assign availability = product.metafields.global.availability %}
+           
+           <script>console.log('product', {{ product | json }} );</script>
+           <script>console.log('availability', {{ availability }} );</script>
+           
+           {%- for item in cart.items -%}
+             {% if item.product.type == "Tour" %}
+             	{% assign booked = true %}
+             {% endif %}
+           {% endfor %}
+           
+            <div class="max-w guide">
+               <h1>{{product.title}}</h1>
+               <h4>{{section.settings.content}}</h4>
+               <div class="p-spc">
+                 <span>Price</span><h5>{{ product.price  | money }} per person</h5>
+               </div>
+               <div class="p-spc">
+                 <span>Quantity</span><h5 class="total_bookable_person"></h5>
+                
+               </div>
+               <div class="p-spc">
+                  <span>Duration</span><h5 class="total_bookable_duration"></h5>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-6 col-md-12">
+            <div class="g-tour">
+               <img src="{{section.settings.img | img_url:'master'}}" alt="" class="w-100" />
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+{% schema %}
+  {
+    "name": "Guiding Tasting Tour",
+    "settings": [
+     {
+        "id":"heading",
+        "type":"textarea",
+        "label":"Heading",
+        "default":"Guided Tasting Tour"
+        },
+        {
+        "id":"content",
+        "type":"textarea",
+        "label":"Content",
+        "default":"Wine and cheese tasting, plus a self guided walk around the scenic vineyard, what could be better?"
+        },
+		{
+        "id":"product",
+        "type":"product",
+        "label":"Select Product"
+        },
+        {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Right Image",
+        "info": "269x48px recommended"
+        }
+	],
+    "presets": [{
+      "name": "Guiding Tasting Tour",
+      "category": "HOMEPAGE"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
+
