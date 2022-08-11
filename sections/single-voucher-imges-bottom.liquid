@@ -1,0 +1,43 @@
+<section class="two-imgs">
+  <div class="container-fluid">
+
+
+    <div class="row">
+      {%for block in section.blocks%}
+      <div class="col-md-6">
+        <div class="t-bx {% if forloop.index==1%}mrg-30{%endif%}">
+          <img src="{{block.settings.img | img_url:'master'}}" class="w-100">
+        </div>
+      </div>
+      {%endfor%}
+    </div>
+  </div>
+</section>
+{% schema %}
+  {
+    "name": "Section Bottom Images",
+    "settings": [
+	 
+	],
+    "blocks": [
+     {
+      "type": "image",
+      "name": "image",
+      "limit":2,
+      "settings": [
+        {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Background Image",
+        "info": "872x540px recommended"
+        }
+	  
+      ]
+     }
+    ],
+    "presets": [{
+      "name": "Section Bottom Images",
+      "category": "HOMEPAGE"
+    }]
+  }
+{% endschema %}

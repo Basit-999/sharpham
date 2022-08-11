@@ -1,0 +1,87 @@
+<section class="kitchen-area">
+   <div class="container-fluid">
+      <div class="row">
+        {% for block in section.blocks %}
+         <div class="col-lg-{%if forloop.index==1%}5{%else%}7{%endif%} {%if forloop.index==1%}pr-lg-0{%endif%} col-md-12">
+            <div class="{%if forloop.index==1%}door-bx {%else%}cheese-bx{%endif%}">
+               <img src="{{block.settings.img | img_url:'master'}}" alt="" class="w-100" />
+               <div class="k-caption">
+                  <h5>{{block.settings.heading}}</h5>
+                 {%if block.settings.content!=blank%}
+                  <p>{{block.settings.content}}</p>
+                 {%endif%}
+                  <a href="" class="brd-btn {%if forloop.index==2%} mb-0{%endif%}">{{block.settings.btn_label}}</a>
+               </div>
+            </div>
+         </div>
+        {%endfor%}
+         <div class="col-lg-7 col-md-12 d-none">
+            <div class="cheese-bx">
+               <img src="{{'cheese.jpg' | file_url}}" alt="" class="w-100" />
+               <div class="k-caption">
+                  <h5>Our Award-winning Handmade Cheese</h5>
+                  <a href="" class="brd-btn mb-0">View Our Cheeses</a>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+{% schema %}
+  {
+    "name": "Homepage Kitchen section",
+    "settings": [
+       
+	],
+    "blocks": [
+     {
+      "type": "image",
+      "name": "image",
+      "limit":2,
+      "settings": [
+       {
+        "id":"heading",
+        "type":"text",
+        "label":"Heading",
+        "default":"The Cellar Door Kitchen"
+        },
+        {
+        "id":"content",
+        "type":"textarea",
+        "label":"Content",
+        "default":"Excellent food overlooking <span class='d-block'>the river Dart</span>"
+        },
+        {
+        "id":"btn_label",
+        "type":"text",
+        "label":"Button Label",
+        "default":"View Menu & Times"
+        },
+        {
+        "id":"link",
+        "type":"url",
+        "label":"Button Link"
+        },
+        {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Background Image",
+        "info": "1135x800px recommended"
+        }
+	  
+      ]
+     }
+    ],
+    "presets": [{
+      "name": "Homepage Kitchen section",
+      "category": "HOMEPAGE"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
