@@ -1,0 +1,78 @@
+<section class="product-slider">
+   <div class="container-fluid">
+      {%- for block in section.blocks -%}
+        {%if section.settings.title == blank%}
+        <h2 >{{ collections[block.settings.collection].title }}</h2>
+        {%else%}
+        <h2>{{section.settings.title}}</h2>
+        {%endif%}
+        {%- endfor -%}
+      <div class="main-content position-relative">
+         <div class="owl-carousel owl-theme">
+           {%- for block in section.blocks -%}
+               {%- for product in collections[block.settings.collection].products -%}
+            <div class="item">
+               <div class="box mb-2">
+                  <a href="{{product.url}}">
+                    <img src="{{ product.featured_image.src | img_url: '1024x' }}">
+
+                 </a>
+                  <ul class="icon">
+                    <form method="post" action="/cart/add">
+                     <li>
+                         <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                         <button type="submit" class="btn" alt="">
+                         <img src="{{'cart-p.svg' | asset_url}}" alt="" /></a>
+                    </li>
+                    </form>
+                     <li><a href="#"><img src="{{'heart-p.svg' | asset_url}}" alt="" /></a></li>
+                     <li><a href="#"><img src="{{'plus-p.svg' |asset_url}}" alt="" /></a></li>
+                  </ul>
+               </div>
+               <a href="{{product.url}}">
+                  <h3>{{ product.title }}</h3>
+               </a>
+               <p class="mb-0"><span>Bottle</span> {{product.price | money | remove:" "}}</p>
+               <p><span>Case</span> {{product.price | money | remove:" "}} <span class="text-danger"><del>{{product.compare_at_price | money | remove:" "}}</del></span></p>
+            </div>
+           {%endfor%}
+           {%endfor%}
+		</div>
+      </div>
+   </div>
+</section>
+{% schema %}
+{
+   "name": "Favorite Collection",
+   "settings": [
+      {
+      "type": "text",
+      "id": "heading",
+      "default": "Favourite Picks",
+      "label": "Heading Title"
+      }
+      
+   ],
+   "blocks": [
+      {
+         "type": "collection",
+         "name": "Collection",
+         "limit": 1,
+         "settings": [
+            {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection"
+            }
+
+         ]
+      }
+   ],
+   "presets": [
+      {
+      "name": "Favorite Collection",
+      "category": "All Sections"
+      }
+   ]
+}
+{% endschema %}

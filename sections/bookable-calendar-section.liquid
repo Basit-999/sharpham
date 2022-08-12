@@ -1,0 +1,153 @@
+<section class="cal-area">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-lg-6 col-md-12">
+            <div class="calendr">
+              {% assign product = all_products[section.settings.product] %} 
+              <script>
+                const urlParams = new URLSearchParams(window.location.search);
+                const myParam = urlParams.get('name');
+                console.log('myParam', myParam );
+                console.log('product', {{ all_products | json }} );
+              </script>
+              <h3>{{section.settings.heading}}</h3>
+               <div id="multiple" class="article">
+                  <div class="multi-select-calendar"></div>
+
+                  <ul class="date-area clearfix">
+                     <li>
+                        <div class="selectBox caln notAllowed dates_div">
+                           <div class="selectBox__value" id="available_date_selected"></div>
+
+                        </div>
+                     </li>
+                     <li>
+                        <div class="selectBox notAllowed times_div">
+                           <div class="selectBox__value" id="available_time_selected"></div>
+                           <div class="dropdown-menu" id="available_time">
+
+                           </div>
+                        </div>
+                     </li>
+                     <li>
+                        <div class="selectBox notAllowed persons_div">
+                           <div class="selectBox__value" id="available_person_selected"></div>
+                           <div class="dropdown-menu" id="available_person">
+                              <a href="javascript:void(0)" class="dropdown-item active">3 Adults</a>
+                           </div>
+                        </div>
+                     </li>
+                  </ul>
+                  <span class="product_json" style="display: none">{{ product.metafields.global.availability  }}</span>
+                  <form method="post" action="/cart/add">
+                     <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                     <input type="hidden" name="quantity" value="1" />
+                     <input type="hidden" name="properties[Id]" value="" />
+                     <input type="hidden" name="properties[start]" value="" />
+                     <input type="hidden" name="properties[end]" value="" />
+                     <input type="hidden" name="properties[Time]" value="" />
+                     <input type="hidden" name="properties[Persons]" value="1 Adult" />
+                     <script>
+                        calenderJson = {{ product.metafields.global.availability }};
+                     </script>
+                    {%- for item in cart.items -%}
+                          {% if item.product.type == "Tour" %}
+                            {% assign booked = true %}
+                          {% endif %}
+                    {% endfor %}
+                    
+                    {% if booked %}
+                         <button type="button" class="book-tour book-tour_booking bookedAlready notAllowed" disabled="true">{{ section.settings.btn_label_booked }}</button>
+                    {% else %}
+                    	 <button type="button" class="book-tour book-tour_booking notAllowed"><span class="product_price_calender" data-price="{{ product.price_min | money_without_currency }}">{{ product.price_min | money_without_trailing_zeros }}</span> {{ section.settings.btn_label }}</button>
+                    {% endif %}
+                    
+                  </form>
+               </div>
+            </div>
+
+            <div class="voucher">
+               <h3>{{section.settings.voucher_heading}}</h3>
+
+                  <a href="{{section.settings.voucher_link}}" class="gift-btn">{{section.settings.voucher_label}}</a>
+            </div>
+         </div>
+         <div class="col-lg-6 col-md-12">
+            <div class="cow-img">
+               <img src="{{section.settings.big_img | img_url:'master'}}" alt="" class="w-100 big-screen" />
+               <img src="{{section.settings.desk_img | img_url:'master'}}" alt="" class="w-100 dsk-screen" />
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+{% schema %}
+  {
+    "name": "Calender Section",
+    "settings": [
+     {
+        "id":"heading",
+        "type":"textarea",
+        "label":"Heading",
+        "default":"Book A Tour"
+        },
+        {
+        "id":"btn_label",
+        "type":"textarea",
+        "label":"Button Label",
+        "default":" -Book Now"
+        },
+		{
+        "id":"btn_label_booked",
+        "type":"textarea",
+        "label":"Button Label",
+        "default":"Already in Cart!"
+        },
+        {
+        "id":"product",
+        "type":"product",
+        "label":"Select Product"
+        },
+        {
+        "id":"voucher_heading",
+        "type":"textarea",
+        "label":"Voucher Heading",
+        "default":"Rather gift this tour, or not ready to book yet?"
+        },
+        {
+        "id":"voucher_label",
+        "type":"textarea",
+        "label":"Voucher Button Label",
+        "default":"Buy Gift Voucher"
+        },
+        {
+        "id":"voucher_link",
+        "type":"url",
+        "label":"Voucher Button Link"
+        },
+        {
+        "type": "image_picker",
+        "id": "desk_img",
+        "label": "Desktop  Image",
+        "info": "600x920px recommended"
+        },
+        {
+        "type": "image_picker",
+        "id": "big_img",
+        "label": "Big Screen Image",
+        "info": "600x820px recommended"
+        }
+        
+	],
+    "presets": [{
+      "name": "Calender Section",
+      "category": "HOMEPAGE"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
