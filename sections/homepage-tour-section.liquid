@@ -1,0 +1,87 @@
+<section class="wine-cheese" style="background:url({{section.settings.img | img_url:'master'}})">
+   <div class="container-fluid">
+      <div class="w-box clearfix">
+         <h3>{{section.settings.heading}}</h3>
+         <p>{{section.settings.content}}</p>
+         <ul class="list-area">
+            <li><a href="{{section.settings.link1}}" class="green-bt">{{section.settings.btn_label1}}</a></li>
+            <li><a href="{{section.settings.link2}}" class="white-bt">{{section.settings.btn_label2}}</a></li>
+            <li><a href="{{section.settings.link3}}" class="bd-bt">{{section.settings.btn_label3}}</a></li>
+         </ul>
+      </div>
+   </div>
+</section>
+{% schema %}
+  {
+    "name": "HomePage Tour Section",
+    "settings": [
+        {
+        "id":"heading",
+        "type":"textarea",
+        "label":"Heading 1",
+        "default":"Wine & Cheese Tasting Tours Like no other"
+        },
+        {
+        "id":"heading2",
+        "type":"textarea",
+        "label":"Heading 2",
+        "default":"Tours Like no other"
+        },
+        {
+        "id":"content",
+        "type":"textarea",
+        "label":"Content",
+        "default":"Book A Tour Now Or Buy A Gift Voucher Now"
+        },
+        {
+        "id":"btn_label1",
+        "type":"text",
+        "label":"Button Label 1",
+        "default":"Book A Tour"
+        },
+        {
+        "id":"link1",
+        "type":"url",
+        "label":"Button Link 1"
+        },
+        {
+        "id":"btn_label2",
+        "type":"text",
+        "label":"Button Label 2",
+        "default":"Gift A Tour"
+        },
+        {
+        "id":"link2",
+        "type":"url",
+        "label":"Button Link 2"
+        },
+        {
+        "id":"btn_label3",
+        "type":"text",
+        "label":"Button Label ",
+        "default":"Read More"
+        },
+        {
+        "id":"link3",
+        "type":"url",
+        "label":"Button Link 3"
+        },
+        {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Background Image",
+        "info": "1135x800px recommended"
+        }
+	],
+    "presets": [{
+      "name": "HomePage Tour Section",
+      "category": "HOMEPAGE"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,510 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+{{ '//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js' | script_tag }}
+<div class="customer order">
+  <svg style="display:none">
+    <symbol id="icon-discount" viewBox="0 0 12 12">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M7 0h3a2 2 0 012 2v3a1 1 0 01-.3.7l-6 6a1 1 0 01-1.4 0l-4-4a1 1 0 010-1.4l6-6A1 1 0 017 0zm2 2a1 1 0 102 0 1 1 0 00-2 0z" fill="currentColor">
+      </symbol>
+    </svg>
+    <div class="testing">
+      <h1 class="sandhead">{{ 'customer.account.title' | t }}</h1>
+      <a href="{{ routes.account_url }}">{{ 'customer.account.return' | t }}</a>
+    </div>
+    
+    <div class="order_master_div">
+      
+      
+      <div>
+        <h2 class="sandhead">{{ 'customer.order.title' | t: name: order.name }}</h2>
+        {%- assign order_date = order.created_at | time_tag: format: "date_at_time" -%}
+        <p>{{ 'customer.order.date_html' | t: date: order_date }}</p>
+        {%- if order.cancelled -%}
+        {%- assign cancelled_at = order.cancelled_at | time_tag: format: "date_at_time" -%}
+        <p>{{ 'customer.order.cancelled_html' | t: date: cancelled_at }}</p>
+        <p>{{ 'customer.order.cancelled_reason' | t: reason: order.cancel_reason_label }}</p>
+        {%- endif -%}
+        
+        <table role="table" class="order-details">
+          <caption class="visually-hidden">{{ 'customer.order.title' | t: name: order.name }}</caption>
+          <thead role="rowgroup">
+            <tr role="row">
+              <th id="ColumnProduct" scope="col" role="columnheader">{{ 'customer.order.product' | t }}</th>
+              <th id="ColumnSku" scope="col" role="columnheader">{{ 'customer.order.sku' | t }}</th>
+              <th id="ColumnPrice" scope="col" role="columnheader">{{ 'customer.order.price' | t }}</th>
+              <th id="ColumnQuantity" scope="col" role="columnheader">{{ 'customer.order.quantity' | t }}</th>
+              <th id="ColumnTotal" scope="col" role="columnheader">{{ 'customer.order.total' | t }}</th>
+            </tr>
+          </thead>
+          <tbody role="rowgroup">
+            {%- for line_item in order.line_items -%}
+              {% assign product = all_products[line_item.product.handle] %}
+
+              {%- if order.metafields.global.selectedslot -%}
+                {% assign properties = order.metafields.global.selectedslot %}
+              {%- else -%}
+                {% assign properties = line_item.properties %}
+              {%- endif -%}
+              
+              <span style="display: none" class="product_json_test">{{ properties[0] }}</span>
+<!--               <script>console.log('order.metafields', {{ properties[0] }});</script> -->
+              
+            <tr role="row">
+              <td
+              id="Row{{ line_item.key }}"
+              headers="ColumnProduct"
+              role="rowheader"
+              scope="row"
+              data-label="{{ 'customer.order.product' | t }}"
+              >
+              <div>
+                {%- if line_item.url != blank -%}
+                <a href="{{ line_item.url }}">{{ line_item.title }}</a>
+                {%- else -%}
+                <p>{{ line_item.title }}</p>
+                {%- endif -%}
+                {%- assign property_size = line_item.properties | size -%}
+                {%- unless line_item.selling_plan_allocation == nil and property_size == 0 -%}
+                <div class="properties">
+                  {%- unless line_item.product.has_only_default_variant -%}
+                  <span >
+                    {{ line_item.variant.title }}
+                  </span>
+                  {%- endunless -%}
+                  {%- unless line_item.selling_plan_allocation == nil -%}
+                  <span>
+                    {{ line_item.selling_plan_allocation.selling_plan.name }}
+                  </span>
+                  {%- endunless -%}
+                  
+                  {%- if property_size != 0 -%}
+                  {%- for property in line_item.properties -%}
+                  
+                  
+                  
+                  {% assign property_first_char = property.first | slice: 0 %}
+                  {%- if property.last != blank and property_first_char != '_' -%}
+                  <span>
+                    {{ property.first }}:&nbsp;
+                    {%- if property.last contains '/uploads/' -%}
+                    <a href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>
+                    {%- else -%}
+                    {{ property.last }}
+                    {%- endif -%}
+                  </span>
+                  {%- if property.first contains "Recipient Message" -%}
+                  <p id="content">{{ order.metafields.global.attendees }}</p>
+
+                             <script>
+                    function demoFromHTML() {
+                      var pdf = new jsPDF('p', 'pt', 'letter');
+                      // source can be HTML-formatted string, or a reference
+                      // to an actual DOM element from which the text will be scraped.
+                      source = $('#content')[0];
+
+                      // we support special element handlers. Register them with jQuery-style 
+                      // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+                      // There is no support for any other type of selectors 
+                      // (class, of compound) at this time.
+                      specialElementHandlers = {
+                        // element with id of "bypass" - jQuery style selector
+                        '#bypassme': function (element, renderer) {
+                          // true = "handled elsewhere, bypass text extraction"
+                          return true
+                        }
+                      };
+                      margins = {
+                        top: 80,
+                        bottom: 60,
+                        left: 40,
+                        width: 522
+                      };
+                      // all coords and widths are in jsPDF instance's declared units
+                      // 'inches' in this case
+                      pdf.fromHTML(
+                        source, // HTML string or DOM elem ref.
+                        margins.left, // x coord
+                        margins.top, { // y coord
+                        'width': margins.width, // max width of content on PDF
+                        'elementHandlers': specialElementHandlers
+                      },
+
+                        function (dispose) {
+                          // dispose: object with X, Y of the last line add to the PDF 
+                          //          this allow the insertion of new lines after html
+                          pdf.save('Test.pdf');
+                        }, margins
+                      );
+                    }
+                  </script>
+ <br />
+                  <!--    <a target="_blank" href="https://res.cloudinary.com/developermaxenius/raw/upload/v1659686176/sandridge-barton-wines-ltd/{{ line_item.id }}.pdf" class="button">Download PDF</a>-->
+
+                      
+                  {%- endif -%}
+                  {%- endif -%}
+                  {%- endfor -%}
+                  {%- endif -%}
+                </div>
+                {%- endunless -%}
+                
+                {%- if line_item.line_level_discount_allocations != blank -%}
+                <ul role="list" aria-label="{{ 'customer.order.discount' | t }}">
+                  {%- for discount_allocation in line_item.line_level_discount_allocations -%}
+                  <li>
+                    <svg aria-hidden="true" focusable="false" viewBox="0 0 12 12">
+                      <use href="#icon-discount" />
+                    </svg>
+                    {{- discount_allocation.discount_application.title }} (-{{ discount_allocation.amount | money -}})
+                  </li>
+                  {%- endfor -%}
+                </ul>
+                {%- endif -%}
+                
+                {%- if line_item.fulfillment -%}
+                <div class="fulfillment">
+                  {%- assign created_at = line_item.fulfillment.created_at | time_tag: format: 'date' -%}
+                  <span>{{ 'customer.order.fulfilled_at_html' | t: date: created_at }}</span>
+                  
+                  {%- if line_item.fulfillment.tracking_url -%}
+                  <a href="{{ line_item.fulfillment.tracking_url }}">
+                    {{ 'customer.order.track_shipment' | t }}
+                  </a>
+                  {%- endif -%}
+                  <span>
+                    {{ line_item.fulfillment.tracking_company }}
+                    {%- if line_item.fulfillment.tracking_number -%} #{{ line_item.fulfillment.tracking_number }} {%- endif -%}
+                  </span>
+                </div>
+                {%- endif -%}
+                {% assign start = false %}
+                {% for property in line_item.properties %}
+                {% if property[0] == 'start' %}
+                {% assign start = true %}
+                {% endif %}
+                {% endfor %}
+                {% unless order.cancelled %}
+                {% if start %}
+                {{  }}
+                
+                
+                
+                
+                
+                {% assign max_add_days = 4 | times: 86400 %}
+                {%   assign max_current_date = "now" | date: "%s" | plus: max_add_days | date: "%Y%m%d" %}
+                {% for property in line_item.properties %}
+                {% if property[0] == 'start' %}
+                {% assign max_order_date = property[1] | date: "%Y%m%d" %}
+                {% endif %}
+                {% endfor %}
+                
+                {% if  max_order_date >= max_current_date %}
+                <div class="change_booking_btn ">
+                  <button type="button" class="big-btn change_booking_order" data-id="{{ line_item.id }}">Change Booking</button>
+                </div>
+                {% else %}
+                <br/>
+                <p class="max_cancel_order">For booking modification/cancellation, please contact with shop admin</p>
+                
+                {% endif %}
+                {% endif  %}
+                {% endunless %}
+              </div>
+            </td>
+            <td
+            headers="Row{{ line_item.key }} ColumnSku"
+            role="cell"
+            data-label="{{ 'customer.order.sku' | t }}"
+            >
+            {{ line_item.sku }}
+          </td>
+          <td
+          headers="Row{{ line_item.key }} ColumnPrice"
+          role="cell"
+          data-label="{{ 'customer.order.price' | t }}"
+          >
+          {%- if line_item.original_price != line_item.final_price or line_item.unit_price_measurement -%}
+          <dl>
+            {%- if line_item.original_price != line_item.final_price -%}
+            <dt>
+              <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+            </dt>
+            <dd class="regular-price">
+              <s>{{ line_item.original_price | money }}</s>
+            </dd>
+            <dt>
+              <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+            </dt>
+            <dd>
+              <span>{{ line_item.final_price | money }}</span>
+            </dd>
+            {%- else -%}
+            <dt>
+              <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+            </dt>
+            <dd>
+              {{ line_item.original_price | money }}
+            </dd>
+            {%- endif -%}
+            {%- if line_item.unit_price_measurement -%}
+            <dt>
+              <span class="visually-hidden">{{ 'products.product.price.unit_price' | t }}</span>
+            </dt>
+            <dd class="unit-price">
+              <span>
+                {%- capture unit_price_separator -%}
+                <span aria-hidden="true">/</span><span class="visually-hidden">{{ 'accessibility.unit_price_separator' | t }}&nbsp;</span>
+                {%- endcapture -%}
+                {%- capture unit_price_base_unit -%}
+                {%- if line_item.unit_price_measurement.reference_value != 1 -%}
+                {{- line_item.unit_price_measurement.reference_value -}}
+                {%- endif -%}
+                {{ line_item.unit_price_measurement.reference_unit }}
+                {%- endcapture -%}
+                <span data-unit-price>{{ line_item.unit_price | money }}</span>{{- unit_price_separator -}}{{- unit_price_base_unit -}}
+              </span>
+            </dd>
+            {%- endif -%}
+          </dl>
+          {%- else -%}
+          <span>{{ line_item.final_price | money }}</span>
+          {%- endif -%}
+        </td>
+        <td
+        headers="Row{{ line_item.key }} ColumnQuantity"
+        role="cell"
+        data-label="{{ 'customer.order.quantity' | t }}"
+        >
+        {{ line_item.quantity }}
+      </td>
+      <td
+      headers="Row{{ line_item.key }} ColumnTotal"
+      role="cell"
+      data-label="{{ 'customer.order.total' | t }}"
+      >
+      {%- if line_item.original_line_price != line_item.final_line_price -%}
+      <dl>
+        <dt>
+          <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+        </dt>
+        <dd class="regular-price">
+          <s>{{ line_item.original_line_price | money }}</s>
+        </dd>
+        <dt>
+          <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+        </dt>
+        <dd>
+          <span>{{ line_item.final_line_price | money }}</span>
+        </dd>
+      </dl>
+      {%- else -%}
+      {{ line_item.original_line_price | money }}
+      {%- endif -%}
+    </td>
+  </tr>
+  {%- endfor -%}
+</tbody>
+<tfoot role="rowgroup">
+  <tr role="row">
+    <td id="RowSubtotal" role="rowheader" scope="row" colspan="4">
+      {{ 'customer.order.subtotal' | t }}
+    </td>
+    <td headers="RowSubtotal" role="cell" data-label="{{ 'customer.order.subtotal' | t }}">{{ order.line_items_subtotal_price | money }}</td>
+  </tr>
+  {%- if order.cart_level_discount_applications != blank -%}
+  <tr role="row">
+    {%- for discount_application in order.cart_level_discount_applications -%}
+    <td id="RowDiscount" role="rowheader" scope="row" colspan="4">
+      {{ 'customer.order.discount' | t }}
+      <span class="cart-discount">
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 12 12">
+          <use href="#icon-discount" />
+        </svg>
+        {{- discount_application.title -}}
+      </span>
+    </td>
+    <td headers="RowDiscount" role="cell" data-label="{{ 'customer.order.discount' | t }}">
+      <div>
+        <span>-{{ discount_application.total_allocated_amount | money }}</span>
+        <span class="cart-discount">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 12 12">
+            <use href="#icon-discount" />
+          </svg>
+          {{- discount_application.title -}}
+        </span>
+      </div>
+    </td>
+    {%- endfor -%}
+  </tr>
+  {%- endif -%}
+  {%- for shipping_method in order.shipping_methods -%}
+  <tr role="row">
+    <td id="RowShipping" role="rowheader" scope="row" colspan="4">{{ 'customer.order.shipping' | t }} ({{ shipping_method.title }})</td>
+    <td headers="RowShipping" role="cell" data-label="{{ 'customer.order.shipping' | t }} ({{ shipping_method.title }})">{{ shipping_method.price | money }}</td>
+  </tr>
+  {%- endfor -%}
+  {%- for tax_line in order.tax_lines -%}
+  <tr role="row">
+    <td id="RowTax" role="rowheader" scope="row" colspan="4">{{ 'customer.order.tax' | t }} ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%)</td>
+    <td headers="RowTax" role="cell" data-label="{{ 'customer.order.tax' | t }} ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%)">{{ tax_line.price | money }}</td>
+  </tr>
+  {%- endfor -%}
+  <tr role="row">
+    <td id="RowTotal" role="rowheader" scope="row" colspan="3">{{ 'customer.order.total' | t }}</td>
+    <td headers="RowTotal" role="cell" colspan="2" data-label="{{ 'customer.order.total' | t }}">{{ order.total_price | money_with_currency }}</td>
+  </tr>
+</tfoot>
+</table>
+</div>
+<div>
+  <div>
+    <h2 class="sandhead">{{ 'customer.order.billing_address' | t }}</h2>
+    <p>
+      <strong>{{ 'customer.order.payment_status' | t }}:</strong>
+      {{ order.financial_status_label }}
+    </p>
+    {{ order.billing_address | format_address }}
+  </div>
+  <div>
+    <h2 class="sandhead">{{ 'customer.order.shipping_address' | t }}</h2>
+    <p>
+      <strong>{{ 'customer.order.fulfillment_status' | t }}:</strong>
+      {{ order.fulfillment_status_label }}
+    </p>
+    {{ order.shipping_address | format_address }}
+  </div>
+</div>
+</div>
+</div>
+
+{%- for line_item in order.line_items -%}
+{% assign product = all_products[line_item.product.handle] %}
+{% if product.type == 'Tour' %}
+<div class="change_booking_master container" style="    max-width: 960px; display: none" id="change_booking_{{ line_item.id }}">
+  <button class="close_change_booking"><i class="fal fa-times"></i></button>
+  <div class="booking-bg">
+    <ul class="v-detail clearfix">
+      <li>
+        <b> Booking Date</b>
+        <span id="booking_date">
+          {% for property in line_item.properties %}
+          {% if property[0] == 'start' %}
+          {{ property[1] | date: "%B %d, %Y" }}
+          {% endif %}
+          {% endfor %}
+          
+        </span>
+      </li>
+      <li>
+        <b>Booking Time</b>
+        <span id="booking_time{{ line_item.id }}">
+          {% for property in line_item.properties %}
+          {% if property[0] == 'Time' %}
+          {{ property[1] }}
+          {% endif %}
+          {% endfor %}
+        </span>
+        
+      </li>
+      <li>
+        <p>Need to change quantiies? please call us on <a class="small-no" href="tel:01803 228773">01803
+          228773</a></p>
+        </li>
+      </ul>
+      <ul class="pro-vc clearfix">
+        <li>
+          
+          <b> Price</b>
+          <span id="booking_price">£45</span>
+        </li>
+        <li>
+          <b>Quantity</b>
+          {% if line_item.product.type == 'Tour' %}
+          <span id="booking_person">
+            {% for property in line_item.properties %}
+            {% if property[0] == 'Persons' %}
+            {% assign persons = property[1] %}
+            {{ property[1] }}
+            {% endif %}
+            {% endfor %}
+          </span>
+          {% endif %}
+        </li>
+        <li>
+          <b> Duration</b> <span id="booking_duration">1 hour 30 minutes</span>
+        </li>
+      </ul>
+    </div>
+    <div class="booking-bg">
+      <h2 class="sandhead">Change Your Booking</h2>
+      <div class="calendr">
+        
+        <div id="multiple" class="article">
+          <span id="init_booking_date" style="display: none"></span>
+          <div class="cancel-select-calendar{{ line_item.id }}" style="position: relative">
+          </div>
+          <ul class="date-area clearfix">
+            <li>
+              <div class="selectBox caln dates_div">
+                <div class="selectBox__value" id="available_date_selected"></div>
+                <div class="dropdown-menu" id="available_date">
+                  <a href="javascript:void(0)" class="dropdown-item active"></a>
+                </div>
+              </div>
+            </li>
+            
+            <li>
+              <div class="selectBox times_div">
+                <div class="selectBox__value" id="available_time_selected"></div>
+                <div class="dropdown-menu" id="available_time">
+                  
+                </div>
+              </div>
+            </li>
+          </ul>
+          
+          <div class="form_attributes">
+            <input type="hidden" name="id" value="{{ line_item.product.variants.first.id }}" />
+            <input type="hidden" name="quantity" value="1" />
+            <input type="hidden" name="properties[Id]" value="" />
+            <input type="hidden" name="properties[start]" value="" />
+            <input type="hidden" name="properties[end]" value="" />
+            <input type="hidden" name="properties[Time]" value="" />
+            <button type="button" class="book-tour update_tour" data-id="{{ order.id }}">Change Booking</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="booking-bg smlk">
+      <h2 class="sandhead">Can’t make it, but not ready to rebook yet?</h2>
+      <button class="red-btn order_delete " data-id="{{ order.id }}">Cancel Tour Booking</button>
+    </div>
+  </div>
+  
+  
+  <span style="display: none" class="product_json">{{ product.metafields.global.availability }}</span>
+  {% assign endDate = '' %}
+  {% assign startDate = '' %}
+  {% for property in line_item.properties %}
+  {% if property[0] == 'start' %}
+  {% assign startDate =  property[1] %}
+  {% endif %}
+  {% if property[0] == 'end' %}
+  {% assign endDate =  property[1] %}
+  {% endif %}
+  {% endfor %}
+  {% include 'order-update-cancel-script' %}
+  {% endif %}
+  {% endfor %}
+  
+  <style>
+    ul.date-area li:nth-child(1) {
+      float: left;
+      width: 49%;
+    }
+    ul.date-area li:nth-child(2) {
+      width: 49%;
+    }
+  </style>
+  

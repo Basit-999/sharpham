@@ -1,0 +1,47 @@
+<section class="guide-new">
+   <div class="container-fluid">
+      <div class="guide-c">
+         <img src="{{section.settings.img | img_url:'master'}}" alt="" class="w-100" />
+         <div class="guide-bxx">
+           <h3>{{section.settings.heading}}</h3>
+            {{section.settings.content}}
+         </div>
+      </div>
+   </div>
+</section>
+{% schema %}
+  {
+    "name": "Guide Image with text",
+    "settings": [
+        {
+        "id":"heading",
+        "type":"textarea",
+        "label":"Heading",
+        "default":"An informal, guided tasting of four wines, two cheese and includes entry to the vineyard."
+        },
+        {
+        "id":"content",
+        "type":"textarea",
+        "label":"Content",
+        "default":"<p>Here you will receive a map of the vineyard where you can follow the various routes we have set up through the vines and down to the River Dart.</p><p>We also offer an informed tasting of four wines and two cheeses and give you an insight into the wine making processes here at Sharpham.</p><p>The vineyard walk can take as little as 30 minutes but as long as an hour so allow yourself enough time to get back for the tasting which will last for a further 45 minutes.</p><p>Booking is essential as the maximum number for a tasting is 15 people. Please scroll down for booking calendar or to purchase this option as a gift.</p>"
+        },
+        {
+        "type": "image_picker",
+        "id": "img",
+        "label": "Background Image",
+        "info": "1331x700px recommended"
+        }
+        
+	],
+    "presets": [{
+      "name": "Guide Image with text",
+      "category": "HOMEPAGE"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
