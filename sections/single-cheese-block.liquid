@@ -1,0 +1,82 @@
+<section class="two-sec mrg-bt">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-7">
+        <div class="img-a scnd-bx">
+          <img src="{{section.settings.img1 | img_url:'master'}}" class="w-100">
+          <div class="wht-bx">
+            <h3>{{section.settings.heading1}}</h3>
+            <p>{{section.settings.content1}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="img-a lst-bx">
+          <img src="{{section.settings.img2 | img_url:'master'}}" class="w-100">
+          <div class="wht-bx">
+            <h3>
+              {{section.settings.heading2}}</h3>
+            <ul class="list-dot">
+              {{section.settings.content2}}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+  {
+    "name": "cheese Image Block",
+    "settings": [
+        {
+        "type": "image_picker",
+        "id": "img1",
+        "label": "Left Image",
+        "info": "1162x924px recommended"
+        },
+        {
+        "id":"heading1",
+        "type":"text",
+        "label":"Heading 1",
+        "default":"Food Pairing"
+        },
+        {
+        "id":"content1",
+        "type":"textarea",
+        "label":"Content One",
+        "default":"A good pairing with game meat, mushroom dishes or casserole."
+        },
+        {
+        "id":"heading2",
+        "type":"text",
+        "label":"Heading 2",
+        "default":"Accolades"
+        },
+         {
+        "id":"content2",
+        "type":"textarea",
+        "label":"Content 2",
+        "default":"<li>Trophy Medal Winner 'Best Red Wine' </li><li>English And Welsh Wine Of The Year Competition 2015</li><li>Wine GB Gold Medal Winner 2019 </li>"
+        },
+        {
+        "type": "image_picker",
+        "id": "img2",
+        "label": "Right Image",
+        "info": "1162x924px recommended"
+        }
+	],
+    "presets": [{
+      "name": "Single cheese Block",
+      "category": "HOMEPAGE"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
+

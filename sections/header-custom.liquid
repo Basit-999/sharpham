@@ -1,0 +1,325 @@
+<link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- if settings.predictive_search_enabled -%}
+  <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="{{ 'component-loading-overlay.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- endif -%}
+
+<noscript>{{ 'component-list-menu.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-search.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-menu-drawer.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-cart-notification.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-cart-items.css' | asset_url | stylesheet_tag }}</noscript>
+
+<style>
+  header-drawer {
+    justify-self: start;
+    margin-left: -1.2rem;
+  }
+
+  @media screen and (min-width: 990px) {
+    header-drawer {
+      display: none;
+    }
+  }
+
+  .menu-drawer-container {
+    display: flex;
+  }
+
+  .list-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .list-menu--inline {
+    display: inline-flex;
+    flex-wrap: wrap;
+  }
+
+  summary.list-menu__item {
+    padding-right: 2.7rem;
+  }
+
+  .list-menu__item {
+    display: flex;
+    align-items: center;
+    line-height: calc(1 + 0.3 / var(--font-body-scale));
+  }
+
+  .list-menu__item--link {
+    text-decoration: none;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    line-height: calc(1 + 0.8 / var(--font-body-scale));
+  }
+
+  @media screen and (min-width: 750px) {
+    .list-menu__item--link {
+      padding-bottom: 0.5rem;
+      padding-top: 0.5rem;
+    }
+  }
+</style>
+
+<script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
+
+<header>
+  <nav  class="navbar fixed-to navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand mx-auto" href="/">
+        <!--Your logo goes here-->
+        <img class="shadow-sm dsk-view" src="{{ 'logo.svg' | asset_url }}" alt="{{ shop.name }}">
+        <img class="shadow-sm mob-view" src="{{ 'logo-black.svg' | asset_url }}" alt="{{ shop.name }}">
+      </a>
+      <ul class="top-icons mob-view">
+        <li class="nav-item">
+          <a class="nav-link" href="/search"><img src="{{ 'srch-icon.svg' | asset_url }}" alt="" class="search-mob" /></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/account/login"><img src="{{ 'login-icon.svg' | asset_url }}" alt="" /></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/pages/wishlist"><img src="{{ 'heart-icon.svg' | asset_url }}" alt="" /></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/cart"><img src="{{ 'green-cart.svg' | asset_url }}" alt="" class="crt-icon" />
+          </a>
+          
+        </li>
+      </ul>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"> 
+        <span class="navbar-toggler-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </button>
+      <div class="navbar-collapse collapse">
+        <ul class="navbar-nav left-menu">
+          {% for link in linklists[section.settings.main_menu].links %}
+          <li class="nav-item{% if link.links != blank %} dropdown{% endif %}{% if link.active %} active{% endif %}">
+            <a class="nav-link{% if link.links != blank %} dropdown-toggle{% endif %}{% if link.active %} active{% endif %}"{% if link.links != blank %} href="#" id="navbarDropdown-{{ link.title | handle }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"{% else %} href="{{ link.url }}"{% endif %}>{{ link.title | escape }}{% if link.links != blank %}  <i class="fa fa-angle-down" aria-hidden="true"></i>{% endif %}</a>
+            {%- if link.links != blank -%}
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              {%- for childlink in link.links -%}
+              <a class="dropdown-item{% if childlink.active %} active{% endif %}" href="{{ childlink.url }}">{{ childlink.title | escape }}</a>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </li>
+          {% endfor %}
+          <li class="nav-item dsk-view">
+		    <a class="nav-link" href="/search"><img src="{{'srch-icon.svg' | asset_url}}" alt="" class="search-ic" /></a>
+		  </li>
+        </ul>
+        <ul class="navbar-nav ml-auto right-menu dsk-view">
+          <li class="nav-item">
+            <a class="nav-link" href="mailto:help@sandridge.com"><img src="{{ 'mail-icon.svg' | asset_url }}" alt="" /> help@Sandridge.com</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="tel:+4401803228773"><img src="{{ 'phone-icon.svg' | asset_url }}" alt="" /> +44(o)1803 228773</a>
+          </li>
+          <li class="nav-item ex-spc">
+            <a class="nav-link" href="/account">Login <img src="{{ 'login-icon.svg' | asset_url }}" alt="" /></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/pages/wishlist">Wishlist <img src="{{ 'heart-icon.svg' | asset_url }}" alt="" /></a>
+          </li>
+          <li class="nav-item">
+            
+           
+   
+           {% if cart.item_count > 0%}
+           <a href="{{ routes.cart_url }}" id="cart-icon-bubble" class="nav-link cirle-black header__icon header__icon--cart link focus-inset">
+             <img src="{{ 'white-cart.svg' | asset_url }}" alt="" />
+            
+             <div class="cart-count-bubble">
+              {%- if cart.item_count < 100 -%}<span aria-hidden="true">{{ cart.item_count }}</span>{%endif%}
+               
+                <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+              </div>
+             {%- liquid -%}
+      
+            </a>
+            {%else%}
+            <a href="{{ routes.cart_url }}" id="cart-icon-bubble" class="nav-link cirle-black header__icon header__icon--cart link focus-inset">
+             <img src="{{ 'white-cart.svg' | asset_url }}" alt="" />
+            
+            
+             {%- liquid -%}
+      
+            </a>
+            {%endif%}
+          </li>
+          
+         
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+{%- render 'cart-notification', color_scheme: section.settings.color_scheme -%}
+
+{% javascript %}
+  class StickyHeader extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      this.header = document.getElementById('shopify-section-header');
+      this.headerBounds = {};
+      this.currentScrollTop = 0;
+      this.preventReveal = false;
+      this.predictiveSearch = this.querySelector('predictive-search');
+
+      this.onScrollHandler = this.onScroll.bind(this);
+      this.hideHeaderOnScrollUp = () => this.preventReveal = true;
+
+      this.addEventListener('preventHeaderReveal', this.hideHeaderOnScrollUp);
+      window.addEventListener('scroll', this.onScrollHandler, false);
+
+      this.createObserver();
+    }
+
+    disconnectedCallback() {
+      this.removeEventListener('preventHeaderReveal', this.hideHeaderOnScrollUp);
+      window.removeEventListener('scroll', this.onScrollHandler);
+    }
+
+    createObserver() {
+      let observer = new IntersectionObserver((entries, observer) => {
+        this.headerBounds = entries[0].intersectionRect;
+        observer.disconnect();
+      });
+
+      observer.observe(this.header);
+    }
+
+    onScroll() {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (this.predictiveSearch && this.predictiveSearch.isOpen) return;
+
+      if (scrollTop > this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
+        requestAnimationFrame(this.hide.bind(this));
+      } else if (scrollTop < this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
+        if (!this.preventReveal) {
+          requestAnimationFrame(this.reveal.bind(this));
+        } else {
+          window.clearTimeout(this.isScrolling);
+
+          this.isScrolling = setTimeout(() => {
+            this.preventReveal = false;
+          }, 66);
+
+          requestAnimationFrame(this.hide.bind(this));
+        }
+      } else if (scrollTop <= this.headerBounds.top) {
+        requestAnimationFrame(this.reset.bind(this));
+      }
+
+
+      this.currentScrollTop = scrollTop;
+    }
+
+    hide() {
+      this.header.classList.add('shopify-section-header-hidden', 'shopify-section-header-sticky');
+      this.closeMenuDisclosure();
+      this.closeSearchModal();
+    }
+
+    reveal() {
+      this.header.classList.add('shopify-section-header-sticky', 'animate');
+      this.header.classList.remove('shopify-section-header-hidden');
+    }
+
+    reset() {
+      this.header.classList.remove('shopify-section-header-hidden', 'shopify-section-header-sticky', 'animate');
+    }
+
+    closeMenuDisclosure() {
+      this.disclosures = this.disclosures || this.header.querySelectorAll('details-disclosure');
+      this.disclosures.forEach(disclosure => disclosure.close());
+    }
+
+    closeSearchModal() {
+      this.searchModal = this.searchModal || this.header.querySelector('details-modal');
+      this.searchModal.close(false);
+    }
+  }
+
+  customElements.define('sticky-header', StickyHeader);
+{% endjavascript %}
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    {% if section.settings.logo %}
+      {% assign image_size = section.settings.logo.width | append: 'x' %}
+      "logo": {{ section.settings.logo | img_url: image_size | prepend: "https:" | json }},
+    {% endif %}
+    "sameAs": [
+      {{ settings.social_twitter_link | json }},
+      {{ settings.social_facebook_link | json }},
+      {{ settings.social_pinterest_link | json }},
+      {{ settings.social_instagram_link | json }},
+      {{ settings.social_tiktok_link | json }},
+      {{ settings.social_tumblr_link | json }},
+      {{ settings.social_snapchat_link | json }},
+      {{ settings.social_youtube_link | json }},
+      {{ settings.social_vimeo_link | json }}
+    ],
+    "url": {{ shop.url | append: page.url | json }}
+  }
+</script>
+{%- if request.page_type == 'index' -%}
+  {% assign potential_action_target = shop.url | append: routes.search_url | append: "?q={search_term_string}" %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": {{ shop.name | json }},
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {{ potential_action_target | json }},
+        "query-input": "required name=search_term_string"
+      },
+      "url": {{ shop.url | append: page.url | json }}
+    }
+  </script>
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo_black",
+        "label": "Site Logo Black"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_white",
+        "label": "Site Logo White"
+      },
+      {
+        "type": "link_list",
+        "id": "main_menu",
+        "label": "Main Menu",
+        "default": "main-menu"
+      },
+      {
+        "type": "textarea",
+        "id": "topbar_text",
+        "label": "Topbar Text",
+        "default": "<a href='#'>FÅ DIN FØRSTE SKRABER FOR KUN 79,- MED KODEN 'BAMBUS'</a>"
+      }
+    ]
+  }
+{% endschema %}
